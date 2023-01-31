@@ -1,0 +1,38 @@
+@import '../../../scss/variables.scss';
+
+.MyCounterWrapper {
+    height: 100%;
+}
+
+.MyCounterButton {
+    height: 100%;
+    width: 30px;
+    border: none;
+    border-radius: 20px 0 0 20px;
+    background-color: $second-color;
+    color: $first-color;
+    cursor: pointer;
+    position: relative;
+    top: -1px;
+
+
+    &:last-of-type {
+        border-radius: 0 20px 20px 0;
+    }
+}
+
+.MyCounterInput {
+    height: 100%;
+    width: 50px;
+    border: none;
+    background-color: $first-color;
+    text-align: center;
+    font-size: 16px;
+    color: $second-color;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    }
+}

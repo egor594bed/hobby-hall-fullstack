@@ -1,0 +1,60 @@
+@import "../../../scss/variables.scss";
+
+.MyToastContainer {
+    width: 20%;
+    height: 50px;
+    padding: 30px;
+    position: fixed;
+    right: 0;
+    z-index: 12;
+    pointer-events: none;
+}
+
+.MyToast {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    border-radius: 20px;
+    color: $second-color;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: $first-color;
+
+}
+
+.success {
+
+    border: 2px solid green;
+}
+
+.error {
+
+    border: 2px solid red;
+}
+
+.info {
+
+    border: 2px solid $second-color;
+
+}
+
+.MyToastImg {
+    width: 32px;
+    height: 32px;
+    margin-right: 20px;
+}
+
+// @keyframes rightToLeft {
+// 	from {
+//         transform: translateX(100%);
+        
+//       }
+//       to {
+//         transform: translateX(0);
+//       }
+// }
+
+

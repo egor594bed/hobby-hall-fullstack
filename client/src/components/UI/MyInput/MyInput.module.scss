@@ -1,0 +1,18 @@
+.MyInput {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ecdfc9;
+    border-radius: 20px;
+    box-shadow: 0px 0px 0px transparent;
+  
+    transition: border .2s;
+
+    &:focus {
+      outline: none;
+      border: 1px solid #4b1f07;
+    }
+
+    & + .MyInput {
+        margin-top: 20px;
+    }
+}
