@@ -1,15 +1,16 @@
 const {Router} = require('express')
+const router = Router()
 const Order = require('../models/Order')
 const User = require('../models/User')
-const router = Router()
 
 router.post(
     '/newOrder',
     async (req, res) => {
     try {
         const {userId, basketArr, comment, data, deliveryId, paymentId, state} = req.body
-
+        console.log('Начало')
         const user = await User.findOne({_id: userId})
+        console.log('нашел юзера')
         user.password = undefined
 
         //deliveryId и paymentId заменить на название, когда добавлю их в базу???
@@ -22,8 +23,11 @@ router.post(
             paymentId: paymentId,
             state: state
         }
+        console.log('создал объект')
         const order = new Order(newOrder)
+        console.log('нью ордер')
         await order.save()
+        console.log('сейв')
 
 
         res.status(201).json({message: `Заказ добавлен`})
