@@ -10,9 +10,9 @@ router.post(
         const {userId, basketArr, comment, data, deliveryId, paymentId, state} = req.body
         console.log('Начало')
         const user = await User.findOne({_id: userId})
-        console.log('нашел юзера')
         user.password = undefined
-
+        console.log('пассворд андефайнд')
+        
         //deliveryId и paymentId заменить на название, когда добавлю их в базу???
         const newOrder = {
             user: user,
