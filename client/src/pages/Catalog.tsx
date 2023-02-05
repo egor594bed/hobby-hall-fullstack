@@ -9,7 +9,6 @@ import { useHttp } from '../hooks/http.hook'
 const Catalog = () => {
     const {loading, error, request} = useHttp()
     const [activeGoodsList, setActiveGoodsList] = useState<IProduct[] | []>([])
-    const [searchValue, setSearchValue] = useState('');
     const searchDelay = useRef<NodeJS.Timeout | null>(null)
     const params = useParams()
     const navigate = useNavigate()

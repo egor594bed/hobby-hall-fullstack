@@ -5,7 +5,7 @@ const schema = new Schema ({
     description: {type: String, required: true},
     price: {type: Number, required: true},
     article: {type: String, required: true, unique: true},
-    imgName: {type: String},
+    imgSrc: {type: String},
     quantity: {type: Number, required: true},
     subCategoryId: {type: Types.ObjectId, required: true},
 

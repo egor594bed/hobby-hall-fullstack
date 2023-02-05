@@ -90,7 +90,7 @@ router.post(
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, 'client/src/img/goodsImgs')
+        cb(null, 'assets/goodsImgs')
     },
     filename: function(req, file, cb) {   
         cb(null, Date.now() + path.extname(file.originalname));
@@ -121,7 +121,7 @@ router.post(
             description,
             price: Number(price),
             article,
-            imgName: req.file.filename,
+            imgSrc: req.file.path,
             quantity: Number(quantity),
             subCategoryId: Types.ObjectId(subCategory)
         }

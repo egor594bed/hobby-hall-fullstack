@@ -8,11 +8,9 @@ router.post(
     async (req, res) => {
     try {
         const {userId, basketArr, comment, data, deliveryId, paymentId, state} = req.body
-        console.log('Начало')
         const user = await User.findOne({_id: userId})
         user.password = undefined
-        console.log('пассворд андефайнд')
-        
+
         //deliveryId и paymentId заменить на название, когда добавлю их в базу???
         const newOrder = {
             user: user,
@@ -23,12 +21,9 @@ router.post(
             paymentId: paymentId,
             state: state
         }
-        console.log('создал объект')
-        const order = new Order(newOrder)
-        console.log('нью ордер')
-        await order.save()
-        console.log('сейв')
 
+        const order = new Order(newOrder)
+        await order.save()
 
         res.status(201).json({message: `Заказ добавлен`})
     } catch (e) {

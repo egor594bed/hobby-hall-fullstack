@@ -44,11 +44,8 @@ const CatalogItem: FC<IProduct> = (data) => {
         <Link to={`product/${data._id}`}>
             <div className='catalog__item' id={data._id}>
                 <div className='catalog__item-wrapper'>
-                    <img className='catalog__item-img' src={
-                    (data.imgName)
-                        ? require(`../../img/goodsImgs/${data.imgName}`)
-                        : require(`../../img/goodsImgs/nophoto.jpeg`)
-                        }
+                    <img className='catalog__item-img' src={data.imgSrc}
+                    onError={(event)=>(event.target as HTMLElement).setAttribute("src",require('./../../img/nophoto.jpeg'))}
                     alt='photo'></img>
                     <div className='catalog__item-text'>
                         <h2 className='catalog__item-title'>{data.name}</h2>

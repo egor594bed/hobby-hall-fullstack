@@ -55,7 +55,9 @@ const BasketItem: FC<IBasketItem> = memo(({data, deleteProduct, changeTotal}) =>
     return (
         <div className='basket__item'>
             <button data-id={data._id} onClick={e => linkProvider(e)} className='basket__item-delete'>X</button>
-            <img className='basket__item-img' src={require(`../../img/goodsImgs/${(data.imgName) ? data.imgName : 'nophoto.jpeg'}`)}></img>
+            <img className='basket__item-img' src={data.imgSrc}
+            onError={(event)=>(event.target as HTMLElement).setAttribute("src",require('./../../img/nophoto.jpeg'))}
+            ></img>
             <p className='basket__item-name'>{data.name}</p>
             <div className='basket__item-price-wrapper'>
                 <p>{data.price} p.</p>

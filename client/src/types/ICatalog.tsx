@@ -16,7 +16,6 @@ export interface IProduct {
     price: number
     article: string
     imgSrc?: string
-    imgName?: string
     quantity: number
     subCategoryId: string
     description?: string
