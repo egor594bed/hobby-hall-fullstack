@@ -2,7 +2,6 @@ import React, { FC, useMemo } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
-import { useHttp } from '../../hooks/http.hook'
 import { IProduct } from '../../types/ICatalog'
 import Loader from '../Loader/Loader'
 import CatalogItem from './CatalogItem'
@@ -36,12 +35,13 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = ({activeGoodsList, loading}) =
         const target = e.target as Element
         const id = Number(target.id)
         setPage(id)
+        window.scrollTo(0, 0)
     }
 
     function pagination() {
         const pages = Math.ceil(activeGoodsList.length/itemsOnPage)
+        if (pages <= 1) return []
         const pagesElements = []
-        console.log(activeGoodsList.length/itemsOnPage)
         for (let i = 0; i < pages; i++) {
             pagesElements.push(
                 <div
@@ -78,14 +78,15 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = ({activeGoodsList, loading}) =
                             return <CatalogItem {...elem} key={elem._id}></CatalogItem>
                         })}
                     </div>
-                    
+                    {pagination().length > 1 &&
                     <div className='catalog__outputArea-pagination'>
-                        {(activeGoodsList[0] && 
+                        {
                             pagination().map((elem) => {
                                 return elem
                             })
-                        )}
+                        }
                     </div>
+                    }
                     </>
                     :
                     <CatalogPromoSlider/>

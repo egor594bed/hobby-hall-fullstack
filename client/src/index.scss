@@ -1089,3 +1089,20 @@ ul,ol,li {
   justify-content: space-between;
 }
 
+//Modal transition
+
+.modal-area-enter {
+  opacity: 0;
+}
+.modal-area-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+.modal-area-exit {
+  opacity: 1;
+}
+.modal-area-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+

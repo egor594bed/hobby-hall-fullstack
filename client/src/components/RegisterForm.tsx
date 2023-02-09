@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import { AuthContext } from '../context/Auth.context'
 import { ToastContext } from '../context/Toast.context'
 import { useHttp } from '../hooks/http.hook'
 import MyButton from './UI/MyButton/MyButton'

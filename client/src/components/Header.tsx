@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, memo } from 'react'
+import React, { useState, useContext, useEffect, memo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import LoginModal from './LoginModal'
 import MyModal from './UI/MyModal/MyModal'
@@ -6,6 +6,7 @@ import logo from '../img/logo.png'
 import basket from '../img/basket.png'
 import login from '../img/login.png'
 import { AuthContext } from '../context/Auth.context'
+import { CSSTransition } from 'react-transition-group'
 
 const Header = memo(() => {
     const auth = useContext(AuthContext)
@@ -50,10 +51,12 @@ const Header = memo(() => {
                 </div>
             </div>
 
-            {(!auth.isAuthenticated  &&
-                <MyModal visible={visible} setVisible={setVisible}>
+            {(!auth.isAuthenticated  && 
+            <CSSTransition in={visible} classNames='modal-area' timeout={300} unmountOnExit>
+                <MyModal setVisible={setVisible}>
                     <LoginModal></LoginModal>
                 </MyModal>
+            </CSSTransition>
             )}
 
 

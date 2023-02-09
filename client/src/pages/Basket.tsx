@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import BasketItem from '../components/Basket/BasketItem'
@@ -190,7 +190,9 @@ const Basket = () => {
                 </div>
                 {loading
                     ?
-                    <Loader></Loader>
+                    <div style={{minHeight:'250px' ,display:'flex', alignItems:'center'}}>
+                        <Loader></Loader>  
+                    </div>
                     :
                     (basketArr.length > 0)
                         ?
