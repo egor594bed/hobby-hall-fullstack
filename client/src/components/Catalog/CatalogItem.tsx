@@ -40,11 +40,13 @@ const CatalogItem: FC<IProduct> = (data) => {
         }
     }, [data._id])
 
+    console.log(data.imgSrc)
+
     return (
-        <Link to={`product/${data._id}`}>
+        <Link to={`/catalog/product/${data._id}`}>
             <div className='catalog__item' id={data._id}>
                 <div className='catalog__item-wrapper'>
-                    <img className='catalog__item-img' src={data.imgSrc}
+                    <img className='catalog__item-img' src={`/${data.imgSrc}`}
                     onError={(event)=>(event.target as HTMLElement).setAttribute("src",require('./../../img/nophoto.jpeg'))}
                     alt='photo'></img>
                     <div className='catalog__item-text'>

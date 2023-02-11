@@ -6,6 +6,7 @@ import { IProduct } from '../../types/ICatalog'
 import Loader from '../Loader/Loader'
 import CatalogItem from './CatalogItem'
 import CatalogPromoSlider from './CatalogPromoSlider'
+import CatalogRecommendedSlider from './CatalogRecommendedSlider'
 
 interface ICatalogOutputArea {
     activeGoodsList: IProduct[]
@@ -62,14 +63,18 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = ({activeGoodsList, loading}) =
         )
     }else if(params.id) {
         return (
-            <div className='catalog__outputArea'>
-                <Outlet></Outlet>
+            <div className='catalog__outputArea-wrapper'>
+                <div className='catalog__outputArea'>
+                    <Outlet></Outlet>
+                </div>
+                <CatalogRecommendedSlider/>
             </div>
         )
     }
 
     return (
-        <div className='catalog__outputArea' style={(activeGoodsList[0]) ? {} : {padding: 0}}>
+        <div className='catalog__outputArea-wrapper'>
+            <div className='catalog__outputArea' style={(activeGoodsList[0]) ? {} : {padding: 0, overflow: 'hidden'}}>
                 {(activeGoodsList[0])
                     ?
                     <>
@@ -91,6 +96,8 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = ({activeGoodsList, loading}) =
                     :
                     <CatalogPromoSlider/>
                 }
+            </div>
+            <CatalogRecommendedSlider/>
         </div>
     )
 }

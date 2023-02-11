@@ -46,6 +46,18 @@ router.get(
 })
 
 router.get(
+    '/getRecommendedItems',
+    async (req, res) => {
+    try {
+        const goodsArr = await Goods.find().limit(4).lean()
+
+        res.status(200).json({items: goodsArr})
+    } catch (e) {
+        res.status(500).json({message: 'Что-то пошло не так'})
+    }
+})
+
+router.get(
     '/getGoodsFromSearch',
     async (req, res) => {
     try {

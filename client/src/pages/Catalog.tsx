@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState, } from 'react'
+import React, {useCallback, useRef, useState, } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import CatalogCategories from '../components/Catalog/CatalogCategories'
 import CatalogOutputArea from '../components/Catalog/CatalogOutputArea'
@@ -7,7 +7,9 @@ import { IProduct } from '../types/ICatalog'
 import { useHttp } from '../hooks/http.hook'
 
 const Catalog = () => {
-    const {loading, error, request} = useHttp()
+    const [openMenu, setOpenMenu] = useState(false)
+
+    const {loading, request} = useHttp()
     const [activeGoodsList, setActiveGoodsList] = useState<IProduct[] | []>([])
     const searchDelay = useRef<NodeJS.Timeout | null>(null)
     const params = useParams()
@@ -47,9 +49,14 @@ const Catalog = () => {
 
     return (
         <div className='catalog container'>
-            <CatalogCategories getGoodsId={getGoodsId}></CatalogCategories>
-            <div className='catalog__rigth'>
+            <div className='catalog__wrapper'>
+                <div className='catalog__title' onClick={e => setOpenMenu(!openMenu)}>
+                    <p>Каталог</p>
+                </div>
                 <CatalogSearch getSearchedProducts={getSearchedProducts}></CatalogSearch>
+            </div>
+            <div className='catalog__middle'>
+                <CatalogCategories getGoodsId={getGoodsId} visible={openMenu}></CatalogCategories>
                 <CatalogOutputArea activeGoodsList={activeGoodsList} loading={loading}></CatalogOutputArea>
             </div>
         </div>

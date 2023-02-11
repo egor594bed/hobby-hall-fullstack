@@ -25,7 +25,8 @@ function App() {
     <AuthContext.Provider value={{token, login, logout, userId, isAuthenticated}}>
       <Routes>
         <Route path="/" element={<Layout/>}>
-          <Route index element={<Navigate to="/catalog" />}></Route>
+          {/* <Route index element={<Navigate to="/catalog" />}></Route> */}
+          <Route index element={<Catalog/>}></Route>
           <Route path="catalog" element={<Catalog/>}>
             <Route path="product/:id" element={<CatalogDetailingItem/>}></Route>
           </Route>

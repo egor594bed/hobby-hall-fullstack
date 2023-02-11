@@ -61,7 +61,7 @@ const CatalogDetailingItem = () => {
         <div className='catalog__detail'>
             <Link to='../'>Назад</Link>
             <div className='catalog__detail-top'>
-                <img className='catalog__detail-top-img' src={product.imgSrc}
+                <img className='catalog__detail-top-img' src={`/${product.imgSrc}`}
                 onError={(event)=>(event.target as HTMLElement).setAttribute("src",require('./../../img/nophoto.jpeg'))}
                 alt='photo'></img>
                 <div className='catalog__detail-top-side'>
