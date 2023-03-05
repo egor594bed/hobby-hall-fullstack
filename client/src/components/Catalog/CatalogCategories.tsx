@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react'
-import { useLocation } from 'react-router-dom';
 import { useHttp } from '../../hooks/http.hook';
 import { ICategory } from '../../types/ICatalog';
 
@@ -13,7 +12,6 @@ interface ICatalogCategories {
 const CatalogCategories: FC<ICatalogCategories> = (props) => {
     const {request} = useHttp()
     const [catalogList, setCatalogList] = useState<ICategory[]>([])
-    const location = useLocation()
     let [active, setActive] = useState<string | boolean>(false);
 
 
@@ -28,13 +26,10 @@ const CatalogCategories: FC<ICatalogCategories> = (props) => {
     }
 
     useEffect(() => {
-        async function getCatalog() {
-            const data = await request('/api/catalog/getCategory', 'GET')
-            console.log(data)
-
-            setCatalogList(data.catalog)
-        }
-        getCatalog()
+        try {
+            request('/api/catalog/getCategory', 'GET')
+            .then((data => setCatalogList(data.catalog)))
+        } catch (error) {}
     }, [])
 
     return (

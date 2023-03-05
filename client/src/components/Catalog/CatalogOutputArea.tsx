@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC, memo, useMemo } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
@@ -15,7 +15,7 @@ interface ICatalogOutputArea {
 
 const itemsOnPage = 12
 
-const CatalogOutputArea: FC<ICatalogOutputArea> = ({activeGoodsList, loading}) => {
+const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loading}) => {
     const params = useParams()
     const [page, setPage] = useState<number>(1)
 
@@ -100,6 +100,6 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = ({activeGoodsList, loading}) =
             <CatalogRecommendedSlider/>
         </div>
     )
-}
+})
 
 export default CatalogOutputArea

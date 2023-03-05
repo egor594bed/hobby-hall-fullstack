@@ -5,23 +5,28 @@ import { useState } from 'react'
 import { toBasket } from '../../utils/toBasket'
 import MyButton from '../UI/MyButton/MyButton'
 import { IProduct } from '../../types/ICatalog'
-import { useToast } from '../../hooks/toast.hook'
+import { addToast } from '../../redux/slices/toasts'
+import { addProduct, removeProduct } from '../../redux/slices/basket'
+import { useDispatch } from 'react-redux'
 
 const CatalogItem: FC<IProduct> = (data) => {
     const [onBasket, setOnBasket] = useState(false)
-    const {setToast} = useToast()
+    const dispatch = useDispatch()
 
     function addToBasket(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-        e.preventDefault();
+        e.preventDefault()
+        e.stopPropagation()
         let target = e.target as HTMLDataElement
         if (typeof(target.dataset.id) === 'string') {
             toBasket(target.dataset.id)
             setOnBasket(!onBasket)
-            // Не работает, почему?
+
             if(!onBasket) {
-                setToast({id: Date.now(), message: `Товар "${data.name}" добвален в корзину`, type: 'info'})
+                dispatch(addProduct())
+                dispatch(addToast({id: Date.now(), message: `Товар "${data.name}" добвален в корзину`, type: 'info'}))
             }else {
-                setToast({id: Date.now(), message: `Товар "${data.name}" удален из корзины`, type: 'info'})
+                dispatch(removeProduct())
+                dispatch(addToast({id: Date.now(), message: `Товар "${data.name}" удален из корзины`, type: 'info'}))
             }
         }
     }
@@ -40,10 +45,8 @@ const CatalogItem: FC<IProduct> = (data) => {
         }
     }, [data._id])
 
-    console.log(data.imgSrc)
-
     return (
-        <Link to={`/catalog/product/${data._id}`}>
+        <Link to={`/catalog/product/${data._id}`} onClick={() => window.scrollTo(0, 0)}>
             <div className='catalog__item' id={data._id}>
                 <div className='catalog__item-wrapper'>
                     <img className='catalog__item-img' src={`/${data.imgSrc}`}

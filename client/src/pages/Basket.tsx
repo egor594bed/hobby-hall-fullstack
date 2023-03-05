@@ -12,10 +12,13 @@ import BasketPayment from '../components/Basket/BasketPayment'
 import MyButton from '../components/UI/MyButton/MyButton'
 import { IProduct } from '../types/ICatalog'
 import { Link } from 'react-router-dom'
-import { AuthContext } from '../context/Auth.context'
 import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
-import { ToastContext } from '../context/Toast.context'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { removeProduct, removeAllFromBasket } from '../redux/slices/basket'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../redux/store'
+import { addToast } from '../redux/slices/toasts'
 
 interface IOrderProperty {
     current?: {
@@ -25,9 +28,8 @@ interface IOrderProperty {
 }
 
 const Basket = () => {
-    const {isAuthenticated} = useContext(AuthContext)
-    const {setToast} = useContext(ToastContext)
-    const {request, loading, error} = useHttp()
+    const isAuthenticated = useSelector((state: RootState) => state.authSlice.isAuthenticated)
+    const {request, loading} = useHttp()
     const [update, setUpdate] = useState(false)
     const [checked, setCheked] = useState<boolean>(true)
     const [updateTotal, setUpdateTotal] = useState(false)
@@ -35,6 +37,7 @@ const Basket = () => {
     const [basketArr, setBasketArr] = useState<IProduct[]>([])
     const [total, setTotal] = useState(0)
     const orderProperty: IOrderProperty = useRef()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const basketStr = localStorage.getItem('basket') as string
@@ -72,6 +75,7 @@ const Basket = () => {
         localStorage.removeItem('basket')
         setBasketArr([])
         setUpdate(true)
+        dispatch(removeAllFromBasket())
     }, [])
 
     const changeTotal = useCallback((id: string, counter: number) => {
@@ -105,6 +109,7 @@ const Basket = () => {
             if(elem._id !== id) return true
         })
         setBasketArr(newBasket)
+        dispatch(removeProduct())
     }, [basketArr])
 
     //Смена способа доставки/оплаты
@@ -169,8 +174,10 @@ const Basket = () => {
         .then(() => {
             localStorage.removeItem('basket')
             setBasketArr([])
-            setToast({message: 'Заказ успешно оформлен! Мы с вами свяжемся в ближайшее время! Спасибо за покупки!', type: 'success', id: Date.now()})
-
+            setUpdate(true)
+            window.scrollTo(0, 0)
+            dispatch(addToast({message: 'Заказ успешно оформлен! Мы с вами свяжемся в ближайшее время! Спасибо за покупки!', type: 'success', id: Date.now()}))
+            dispatch(removeAllFromBasket())
         })
 
     }, [basketArr])
@@ -197,10 +204,19 @@ const Basket = () => {
                     (basketArr.length > 0)
                         ?
                         <>
+                        <TransitionGroup className="basket-items-animate">
                         {basketArr.map((elem) => {
-                            return <BasketItem data={elem} deleteProduct={deleteProductFromBasket} key={elem._id} changeTotal={changeTotal}></BasketItem>
-                            })
-                        }
+                            return (
+                                <CSSTransition
+                                key={'animate' + elem._id}
+                                timeout={300}
+                                classNames="basket-item-animate"
+                              >
+                                <BasketItem data={elem} deleteProduct={deleteProductFromBasket} key={elem._id} changeTotal={changeTotal}></BasketItem>
+                            </CSSTransition>
+                            )}
+                        )}
+                        </TransitionGroup>
                         <div className='basket__item-price-bottom-wrapper'>
                             <MyButton onClick={deleteBasketItems}>Очистить корзину</MyButton>
                             <div className='basket__item-price-total'>
@@ -237,7 +253,7 @@ const Basket = () => {
                             defaultChecked={checked}></input>
                         <label>Согласен с бла бла бла</label>
                     </div>
-                    <MyButton style={{fontSize: '20px', fontWeight: '700'}} disabled={!buttonActive} onClick={postNewOrder}>Оформить заказ</MyButton>
+                    <MyButton style={{fontSize: '20px'}} disabled={!buttonActive} onClick={postNewOrder}>Оформить заказ</MyButton>
                 </div>
                 </>
                 :

@@ -1,0 +1,29 @@
+@media screen and (max-width: 1280px) {
+    .container {
+        width: 1080px !important;
+    }
+    
+    .catalog__title {
+        width: 20%;
+    }
+
+    .catalog__categories--visible {
+        width: 20%;
+    }
+
+    .catalog__categories-wrapper {
+        width: 180px;
+    }
+
+    .catalog__outputArea {
+        min-height: 564px;
+    }
+
+    .catalog__item {
+        width: 255px;
+    }
+
+    .basket__item-price-wrapper {
+        width: 22%;
+    }
+}

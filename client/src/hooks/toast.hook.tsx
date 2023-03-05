@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IToast } from "../types/IToast";
 
+// НЕ ИСПОЛЬЗУЕТСЯ
+
 export const useToast = (() => {
     const [toastList, setToastList] = useState<IToast[]>([])
     const [toast, setToast] = useState<IToast | null>(null)
@@ -22,6 +24,7 @@ export const useToast = (() => {
             deleteTimout.current = setTimeout(() => {
                 toastList.splice(0, 1)
                 setToastList([...toastList])
+
             }, 3000)
         }
 

@@ -1,19 +1,19 @@
-import React, { useContext, useState } from 'react'
-import { AuthContext } from '../context/Auth.context'
-import { ToastContext } from '../context/Toast.context'
+import React, { memo, useState } from 'react'
 import { useHttp } from '../hooks/http.hook'
 import MyButton from './UI/MyButton/MyButton'
 import MyInput from './UI/MyInput/MyInput'
+import { useDispatch } from 'react-redux'
+import { login } from '../redux/slices/auth'
+import { addToast } from '../redux/slices/toasts' 
 
-const LoginForm = () => {
-    const auth = useContext(AuthContext)
+const LoginForm = memo(() => {
+    const dispatch = useDispatch()
     const {error, clearError, request} = useHttp()
-    const {setToast} = useContext(ToastContext)
     const [emailValue, setEmailValue] = useState('')
     const [passwordValue, setPasswordValue] = useState('')
 
     if(error) {
-        setToast({id: Date.now(), message: error, type: 'error'})
+        dispatch(addToast({id: Date.now(), message: error, type: 'error'}))
         clearError()
     }
 
@@ -28,8 +28,11 @@ const LoginForm = () => {
         try {
             await request('/api/auth/login', 'POST', {...form})
             .then(response => {
-                setToast({id: Date.now(), message: response.message, type: 'success'})
-                auth.login(response.token, response.userId)
+                dispatch(addToast({id: Date.now(), message: response.message, type: 'success'}))
+                dispatch(login({
+                    userId: response.userId,
+                    token: response.token
+                })) 
             })
         } catch (error) {}
     }
@@ -42,6 +45,6 @@ const LoginForm = () => {
             <MyButton style={{marginTop: "20px"}} onClick={loginHandler}>Войти</MyButton>
         </form>
     )
-}
+})
 
 export default LoginForm

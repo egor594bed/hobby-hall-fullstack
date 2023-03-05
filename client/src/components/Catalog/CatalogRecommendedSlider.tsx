@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import Carousel from 'nuka-carousel'
 import { useHttp } from '../../hooks/http.hook'
 import { IProduct } from '../../types/ICatalog'
 import Loader from '../Loader/Loader'
 import CatalogRecommendedItem from './CatalogRecommendedItem'
 
-const CatalogRecommendedSlider = () => {
+const CatalogRecommendedSlider = memo(() => {
     const {request, loading} = useHttp()
     const [items, setItems] = useState<IProduct[]>()
 
@@ -57,6 +57,6 @@ const CatalogRecommendedSlider = () => {
         //     )}
         // </Carousel> */
     )
-}
+})
 
 export default CatalogRecommendedSlider

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
@@ -7,14 +7,16 @@ import { toBasket } from '../../utils/toBasket'
 import Loader from '../Loader/Loader'
 import MyButton from '../UI/MyButton/MyButton'
 import { IProduct } from '../../types/ICatalog'
-import { ToastContext } from '../../context/Toast.context'
+import { useDispatch } from 'react-redux'
+import { addToast } from '../../redux/slices/toasts'
+import { addProduct, removeProduct } from '../../redux/slices/basket'
 
 const CatalogDetailingItem = () => {
     const params = useParams()
-    const {setToast} = useContext(ToastContext)
     const [product, setProduct] = useState<IProduct | null>(null)
     const [onBasket, setOnBasket] = useState(false)
     const {request} = useHttp()
+    const dispatch = useDispatch()
     function noop() {}
 
     useEffect(() => {
@@ -31,15 +33,16 @@ const CatalogDetailingItem = () => {
             toBasket(target.dataset.id)
             setOnBasket(!onBasket)
             if(!onBasket) {
-                setToast({id: Date.now(), message: `Товар "${product!.name}" добвален в корзину`, type: 'info'})
+                dispatch(addProduct())
+                dispatch(addToast({id: Date.now(), message: `Товар "${product!.name}" добвален в корзину`, type: 'info'}))
             }else {
-                setToast({id: Date.now(), message: `Товар "${product!.name}" удален из корзины`, type: 'info'})
+                dispatch(removeProduct())
+                dispatch(addToast({id: Date.now(), message: `Товар "${product!.name}" удален из корзины`, type: 'info'}))
             }
         }
     }
 
     useEffect(() => {
-        
         if(localStorage.getItem('basket') && product !== null) { 
             let basketStr = localStorage.getItem('basket') as string
             let basketArr = JSON.parse(basketStr)

@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 
+// НЕ ИСПОЛЬЗУЕТСЯ
+
 const storageName = 'userData'
 
 export const useAuth = () => {

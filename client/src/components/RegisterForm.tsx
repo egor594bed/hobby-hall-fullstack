@@ -1,19 +1,20 @@
-import React, { useContext, useState } from 'react'
-import { ToastContext } from '../context/Toast.context'
+import React, { memo, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useHttp } from '../hooks/http.hook'
 import MyButton from './UI/MyButton/MyButton'
 import MyInput from './UI/MyInput/MyInput'
+import { addToast } from '../redux/slices/toasts'
 
-const RegisterForm = () => {
+const RegisterForm = memo(() => {
+    const dispatch = useDispatch()
     const {error, clearError, request} = useHttp()
-    const {setToast} = useContext(ToastContext)
     const [emailValue, setEmailValue] = useState('')
     const [passwordValue, setPasswordValue] = useState('')
     const [nameValue, setNameValue] = useState('')
     const [phoneValue, setPhoneValue] = useState('')
 
     if(error) {
-        setToast({id: Date.now(), message: error, type: 'error'})
+        dispatch(addToast({id: Date.now(), message: error, type: 'error'}))
         clearError()
     }
 
@@ -30,7 +31,7 @@ const RegisterForm = () => {
         try {
             await request('/api/auth/register', 'POST', {...form})
             .then(() => {
-                setToast({id: Date.now(), message: 'Регистрация прошла успешно!', type: 'success'})
+                dispatch(addToast({id: Date.now(), message: 'Регистрация прошла успешно!', type: 'success'}))
             })
         } catch (e) {}
     }
@@ -45,6 +46,6 @@ const RegisterForm = () => {
             <MyButton style={{marginTop: "20px"}} onClick={registerHandler}>Регистрация</MyButton>
         </form>
     )
-}
+})
 
 export default RegisterForm
