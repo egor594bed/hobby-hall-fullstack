@@ -23,37 +23,39 @@ const Header = memo(() => {
     }, [isAuthenticated])
 
     return (
-        <div className='header container'>
-            <Link to="/">
-                <img className='header__middle-logo' src={logo}></img>
-            </Link>
-            <ContactInfo/>
-            <div className='header__wrapper'>
-                <div className='header__top'>
-                    <Link className='header__top-links' to="/rules">Правила</Link>
-                    <Link className='header__top-links' to="/news">Новинки</Link>
-                    <Link className='header__top-links' to="/contacts">Контакты</Link>
-                </div>
-                <div className='header__middle'>
-                    {isAuthenticated
-                        ?
-                        <div className='header__middle-login' onClick={() => dispatch(logout())}>
-                            <img className='header__middle-login-img' src={login} alt="login"></img>
-                            <p className='header__middle-login-text'>Выйти</p>
-                        </div>
-                        :
-                        <div className='header__middle-login' onClick={() => setVisible(!visible)}>
-                            <img className='header__middle-login-img' src={login} alt="login"></img>
-                            <p className='header__middle-login-text'>Войти</p>
-                        </div>
-                    }
-                    <Link to="/basket">
-                        <div className='header__middle-basket-wrapper'>
-                            <img className='header__middle-basket-img' src={basket} alt="Basket"></img>
-                            <div className='header__middle-counter'>{basketCount}</div>
-                        </div>
-                        <p className='header__middle-login-text'>Корзина</p>
-                    </Link>
+        <div className='header'>
+            <div className='header__wrapper container'>
+                <Link className='header__logo-link' to="/">
+                    <img className='header__logo' src={logo}></img>
+                </Link>
+                <ContactInfo/>
+                <div className='header__right'>
+                    <div className='header__top'>
+                        <Link className='header__top-links' to="/rules">Правила</Link>
+                        <Link className='header__top-links' to="/news">Новинки</Link>
+                        <Link className='header__top-links' to="/contacts">Контакты</Link>
+                    </div>
+                    <div className='header__rigth-middle'>
+                        {isAuthenticated
+                            ?
+                            <div className='header__rigth-middle-login' onClick={() => dispatch(logout())}>
+                                <img className='header__rigth-middle-login-img' src={login} alt="login"></img>
+                                <p className='header__rigth-middle-login-text'>Выйти</p>
+                            </div>
+                            :
+                            <div className='header__rigth-middle-login' onClick={() => setVisible(!visible)}>
+                                <img className='header__rigth-middle-login-img' src={login} alt="login"></img>
+                                <p className='header__rigth-middle-login-text'>Войти</p>
+                            </div>
+                        }
+                        <Link to="/basket">
+                            <div className='header__rigth-middle-basket-wrapper'>
+                                <img className='header__rigth-middle-basket-img' src={basket} alt="Basket"></img>
+                                <div className='header__rigth-middle-counter'>{basketCount}</div>
+                            </div>
+                            <p className='header__rigth-middle-login-text'>Корзина</p>
+                        </Link>
+                    </div>
                 </div>
             </div>
 
@@ -64,8 +66,6 @@ const Header = memo(() => {
                 </MyModal>
             </CSSTransition>
             )}
-
-
         </div>
     )
 })

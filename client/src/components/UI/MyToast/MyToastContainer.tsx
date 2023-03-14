@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import MyToast from './MyToast'
 import cl from './MyToast.module.scss'
 import { IToast } from '../../../types/IToast'
@@ -11,14 +11,18 @@ import { useDispatch } from 'react-redux'
 const MyToastContainer = () => {
     const dispatch = useDispatch()
     const toastList = useSelector((state: RootState) => state.toastsSlice.toastList)
-    const deleteTimout = useRef<NodeJS.Timeout | null>(null)
+    const toastCount = useRef<number>(0)
 
-    if(toastList[0]) {
-        if(deleteTimout.current) clearTimeout(deleteTimout.current)
-        deleteTimout.current = setTimeout(() => {
-            dispatch(autoRemoveToast())
-        }, 3000)
-    }
+    useEffect(() => {
+        if (toastCount.current < toastList.length  && toastList[0]) {
+            setTimeout(() => {
+                dispatch(autoRemoveToast(toastList[toastList.length - 1].id))
+            }, 3000)
+            toastCount.current += 1
+        }else {
+            toastCount.current -= 1
+        }
+    }, [toastList])
 
     return (
         <div className={cl.MyToastContainer}>
@@ -30,7 +34,7 @@ const MyToastContainer = () => {
                     timeout={500}
                     classNames="toast-item-animate"
                     >
-                        <MyToast type={elem.type} message={elem.message}/>
+                        <MyToast id={elem.id} type={elem.type} message={elem.message}/>
                     </CSSTransition>
                 ))
             }

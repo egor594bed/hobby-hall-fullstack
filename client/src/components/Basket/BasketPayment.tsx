@@ -46,16 +46,14 @@ const BasketPayment: FC<IBasketPayment> = memo(({changePayment}) => {
         <div className='basket__payment'>
             <h2 className='basket__payment-title'>Оплата</h2>
             <MySelect onChange={changeActivePayment} data={paymentArr}></MySelect>
-                <div className='basket__payment-wrapper'>
-                    {activePayment
-                    ?
+                <div className='basket__payment-wrapper' style={activePayment ? {background: 'none'} : {backgroundImage: `url(${require('../../img/selectImg.png')})`}}>
+                    {activePayment &&
                     <>
                         <img className='basket__payment-img' src={require(`../../img/payment/${activePayment.imgName}`)}></img>
                         <div className='basket__payment-text-wrapper'>
                             <p className='basket__payment-text'>{activePayment.text}</p>
                         </div>
                     </>
-                    : <img src={require('../../img/selectImg.png')}></img>
                     }
                 </div>
         </div>

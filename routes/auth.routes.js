@@ -5,6 +5,7 @@ const { check, validationResult} = require('express-validator')
 const User = require('../models/User')
 const router = Router()
 const config = require('config')
+// const sendEmail = require('../utils/sendEmail')
 
 module.exports = router;
 
@@ -33,13 +34,14 @@ router.post(
         const checkPhone = await User.findOne({ phone })
 
         if (checkEmail || checkPhone) {
-            res.status(400).json({message: 'Пользователь с таким Email или номером телефона уже существует'})
+            return res.status(400).json({message: 'Пользователь с таким Email или номером телефона уже существует'})
         }
 
         const hashedPassword = await bcrypt.hash(password, 5)
         const user = new User({email, password: hashedPassword, name, phone})
 
         await user.save()
+        // sendEmail('Регистрация на сайте', [email], 'Регистрация на сайте прошла успешно!')
 
         return res.status(201).json({message: 'Регистрация прошла успешно!'})
 
@@ -84,10 +86,10 @@ router.post(
             {expiresIn: '1h'}
         )
         
-        res.status(200).json({token, userId: user.id, userName: user.name, userPhone: user.phone, message: `Добро пожаловать, ${user.name}!`})
+        return res.status(200).json({token, userId: user.id, userName: user.name, userPhone: user.phone, message: `Добро пожаловать, ${user.name}!`})
 
     } catch (e) {
-        res.status(500).json({message: 'Что-то пошло не так'})
+        return res.status(500).json({message: 'Что-то пошло не так'})
     }
     
 })

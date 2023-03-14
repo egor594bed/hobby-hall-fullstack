@@ -5,7 +5,6 @@ import cl from './MyModal.module.scss'
 interface IMyModal {
     children: React.ReactNode
     setVisible: React.Dispatch<React.SetStateAction<boolean>>
-
 }
 
 const MyModal: FC<IMyModal> = (props) => {

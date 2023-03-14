@@ -14,7 +14,6 @@ build
 
 /client/node_modules
 /client/build
-/assets
 
 # misc
 .DS_Store

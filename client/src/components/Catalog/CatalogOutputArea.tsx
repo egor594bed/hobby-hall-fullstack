@@ -1,4 +1,4 @@
-import React, { FC, memo, useMemo } from 'react'
+import React, { FC, memo, useMemo, useRef } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
@@ -7,6 +7,7 @@ import Loader from '../Loader/Loader'
 import CatalogItem from './CatalogItem'
 import CatalogPromoSlider from './CatalogPromoSlider'
 import CatalogRecommendedSlider from './CatalogRecommendedSlider'
+import { CSSTransition } from 'react-transition-group'
 
 interface ICatalogOutputArea {
     activeGoodsList: IProduct[]
@@ -16,6 +17,7 @@ interface ICatalogOutputArea {
 const itemsOnPage = 12
 
 const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loading}) => {
+    const nodeRef = useRef(null)
     const params = useParams()
     const [page, setPage] = useState<number>(1)
 
@@ -55,13 +57,8 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loadin
         return pagesElements
     }
 
-    if(loading) {
-        return (
-        <div className='catalog__outputArea'>
-            <Loader></Loader>
-        </div>
-        )
-    }else if(params.id) {
+
+    if(params.id) {
         return (
             <div className='catalog__outputArea-wrapper'>
                 <div className='catalog__outputArea'>
@@ -75,29 +72,37 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loadin
     return (
         <div className='catalog__outputArea-wrapper'>
             <div className='catalog__outputArea' style={(activeGoodsList[0]) ? {} : {padding: 0, overflow: 'hidden'}}>
-                {(activeGoodsList[0])
-                    ?
-                    <>
-                    <div className='catalog__outputArea-items'>
-                        {visibleItemsArr.map((elem) => {
-                            return <CatalogItem {...elem} key={elem._id}></CatalogItem>
-                        })}
-                    </div>
-                    {pagination().length > 1 &&
-                    <div className='catalog__outputArea-pagination'>
-                        {
-                            pagination().map((elem) => {
-                                return elem
-                            })
-                        }
-                    </div>
-                    }
-                    </>
-                    :
-                    <CatalogPromoSlider/>
+                {loading &&
+                    <Loader></Loader>
                 }
+                <CSSTransition in={!loading} timeout={300} classNames={'hide-out'} nodeRef={nodeRef}>
+                    {(activeGoodsList[0] && !loading)
+                        ?
+                        <>
+                        <div className='catalog__outputArea-items' ref={nodeRef}>
+                            {visibleItemsArr.map((elem) => (
+
+                                <CatalogItem {...elem} key={elem._id}></CatalogItem>
+
+                                )
+                                )}
+                        </div>
+                        {pagination().length > 1 &&
+                        <div className='catalog__outputArea-pagination'>
+                            {
+                                pagination().map((elem) => {
+                                    return elem
+                                })
+                            }
+                        </div>
+                        }
+                        </>
+                        :
+                        <CatalogPromoSlider/>
+                    }
+                </CSSTransition>
             </div>
-            <CatalogRecommendedSlider/>
+        <CatalogRecommendedSlider/>
         </div>
     )
 })

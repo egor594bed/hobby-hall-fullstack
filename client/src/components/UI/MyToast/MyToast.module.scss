@@ -7,7 +7,9 @@
     position: fixed;
     right: 0;
     z-index: 12;
+
     pointer-events: none;
+    
 }
 
 .MyToast {
@@ -22,23 +24,23 @@
     font-size: 14px;
     font-weight: 700;
     background-color: $first-color;
+    cursor: pointer;
 
+    pointer-events: all;
 }
 
 .success {
-
-    border: 2px solid green;
+    // border: 2px solid green;
+    border: 2px solid $second-color;
 }
 
 .error {
-
-    border: 2px solid red;
+    // border: 2px solid red;
+    border: 2px solid $second-color;
 }
 
 .info {
-
     border: 2px solid $second-color;
-
 }
 
 .MyToastImg {

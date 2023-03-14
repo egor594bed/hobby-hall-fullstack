@@ -12,7 +12,7 @@ const initialState: IBasketSlice = {
 function getInitBasketArr() {
     const basketStr = localStorage.getItem('basket') as string
     const basketArr = JSON.parse(basketStr)
-    return basketArr.length
+    return (basketArr) ? basketArr.length : 0
 }
 
 export const basketSlice = createSlice({

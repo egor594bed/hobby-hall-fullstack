@@ -1,4 +1,4 @@
-import e from 'express'
+
 import React, { FC, memo } from 'react'
 import classes from './MyInput.module.scss'
 

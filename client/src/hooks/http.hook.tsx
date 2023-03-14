@@ -1,9 +1,12 @@
 import { useState, useCallback } from "react"
+import { useDispatch } from "react-redux"
+import { addToast } from "../redux/slices/toasts"
 
 
 export const useHttp = () => {
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
+    // const [error, setError] = useState(null)
+    const dispatch = useDispatch()
     const request = useCallback(async (url: string, method = 'GET', body: any = null, headers: any = {}) => {
         setLoading(true)
         try {
@@ -22,13 +25,19 @@ export const useHttp = () => {
             return data
         } catch (e: any) {
             setLoading(false)
-            setError(e.message)
+            dispatch(addToast({id: Date.now(), message: e.message, type: 'error'}))
+            // setError(e.message)
             throw e
         }
     }, [])
 
-    const clearError = useCallback(() => setError(null), [error, request])
+    // const clearError = useCallback(() => setError(null), [error, request])
 
 
-    return { loading, request, error, clearError}
+    return { 
+        loading,
+        request,
+        // error,
+        // clearError
+    }
 }

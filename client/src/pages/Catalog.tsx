@@ -38,7 +38,7 @@ const Catalog = () => {
             if (searchDelay.current) clearTimeout(searchDelay.current)
             searchDelay.current = setTimeout(() => {
                 if (params.id) navigate(-1)
-                request(`../api/catalog/getGoodsFromSearch?search=${value}`)
+                request(`/api/catalog/getGoodsFromSearch?search=${value}`)
                 .then(response => {
                     setActiveGoodsList(response.activeCategoryGoods)
                 })

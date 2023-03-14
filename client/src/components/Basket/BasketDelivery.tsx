@@ -82,9 +82,8 @@ const BasketDelivery: FC<IBasketDelivery> = memo(({changeDelivery}) => {
         <div className='basket__delivery'>
             <h2 className='basket__delivery-title'>Доставка</h2>
             <MySelect onChange={changeActiveDelivery} data={deliveryArr}></MySelect>
-                <div className='basket__delivery-wrapper'>
-                    {activeDelivery
-                    ?
+                <div className='basket__delivery-wrapper' style={activeDelivery ? {background: 'none'} : {backgroundImage: `url(${require('../../img/selectImg.png')})`}}>
+                    {activeDelivery &&
                     <>
                         <img className='basket__delivery-img' src={require(`../../img/delivery/${activeDelivery.imgName}`)}></img>
                         <div className='basket__delivery-text-wrapper'>
@@ -96,7 +95,6 @@ const BasketDelivery: FC<IBasketDelivery> = memo(({changeDelivery}) => {
                             }
                         </div>
                     </>
-                    : <img src={require('../../img/selectImg.png')}></img>
                     }
                 </div>
         </div>

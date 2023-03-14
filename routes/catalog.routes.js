@@ -8,6 +8,16 @@ const User = require('../models/User')
 const { Types } = require('mongoose')
 const router = Router()
 
+function sort(productList) {
+    if (productList.length < 2) return productList
+    productList.sort((a) => {
+        if(a.quantity < 1) return 1
+        else return -1
+    })
+
+    return productList
+}
+
 router.get(
     '/getCategory',
     async (req, res) => {
@@ -21,10 +31,10 @@ router.get(
             elem["subCategories"] = arr
         })
 
-        res.status(200).json({catalog: catalog})
+        return res.status(200).json({catalog: catalog})
 
     } catch (e) {
-        res.status(500).json({message: 'Что-то пошло не так'})
+        return res.status(500).json({message: 'Что-то пошло не так'})
     }
 })
 
@@ -38,10 +48,10 @@ router.get(
         const goodsArr = await Goods.find().lean()
 
         const activeCategoryGoods = goodsArr.filter((item) => item.subCategoryId.toString() == req.query.id)
-
-        res.status(200).json({activeCategoryGoods: activeCategoryGoods})
+        const sortedList = sort(activeCategoryGoods)
+        return res.status(200).json({activeCategoryGoods: sortedList})
     } catch (e) {
-        res.status(500).json({message: 'Что-то пошло не так'})
+        return res.status(500).json({message: 'Что-то пошло не так'})
     }
 })
 
@@ -51,9 +61,9 @@ router.get(
     try {
         const goodsArr = await Goods.find().limit(4).lean()
 
-        res.status(200).json({items: goodsArr})
+        return res.status(200).json({items: goodsArr})
     } catch (e) {
-        res.status(500).json({message: 'Что-то пошло не так'})
+        return res.status(500).json({message: 'Что-то пошло не так'})
     }
 })
 
@@ -63,10 +73,12 @@ router.get(
     try {
         
         const goodsArr = await Goods.find({"name": {$regex: req.query.search, $options: "i"}}).lean()
+        
+        const sortedArr = sort(goodsArr)
 
-        res.status(200).json({activeCategoryGoods: goodsArr})
+        return res.status(200).json({activeCategoryGoods: sortedArr})
     } catch (e) {
-        res.status(500).json({message: 'Что-то пошло не так'})
+        return res.status(500).json({message: 'Что-то пошло не так'})
     }
 })
 
@@ -77,9 +89,9 @@ router.get(
 
         const product = await Goods.findOne({_id: req.query.id}).lean()
 
-        res.status(200).json({product: product})
+        return res.status(200).json({product: product})
     } catch (e) {
-        res.status(500).json({message: 'Что-то пошло не так'})
+        return res.status(500).json({message: 'Что-то пошло не так'})
     }
 })
 
@@ -94,9 +106,9 @@ router.post(
             resArr.push(...goodsArr)
         }
 
-        res.status(200).json({basketArr: resArr})
+        return res.status(200).json({basketArr: resArr})
     } catch (e) {
-        res.status(500).json({message: 'Что-то пошло не так'})
+        return res.status(500).json({message: 'Что-то пошло не так'})
     }
 })
 
@@ -141,9 +153,9 @@ router.post(
         const product = new Goods(newProduct)
         await product.save()
 
-        res.status(201).json({message: `Товар добавлен: ${newProduct.name}`})
+        return res.status(201).json({message: `Товар добавлен: ${newProduct.name}`})
     } catch (e) {
-        res.status(500).json({message: 'Что-то пошло не так'})
+        return res.status(500).json({message: 'Что-то пошло не так'})
     }
 })
 

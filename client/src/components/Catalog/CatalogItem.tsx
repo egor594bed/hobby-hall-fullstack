@@ -58,11 +58,16 @@ const CatalogItem: FC<IProduct> = (data) => {
                     </div>
                     <div className='catalog__item-wrapper-bottom'>
                         <h4 className="catalog__item-price">{`${data.price} р.`}</h4>
-                        <MyButton
-                        onClick={addToBasket}
-                        data-id={data._id}
-                        style={{width: '50%'}}
-                        >{(onBasket) ? 'Удалить' : 'В корзину'}</MyButton>
+                        {data.quantity < 1
+                            ?
+                            <MyButton disabled>{'Нет в наличии'}</MyButton>
+                            :
+                            <MyButton
+                            onClick={addToBasket}
+                            data-id={data._id}
+                            style={{width: '50%'}}
+                            >{(onBasket) ? 'Удалить' : 'В корзину'}</MyButton>
+                        }
                     </div>
                 </div>
             </div>

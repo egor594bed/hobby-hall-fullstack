@@ -72,11 +72,17 @@ const CatalogDetailingItem = () => {
                     <p className='catalog__detail-top-side-article'>{product.article}</p>
                     <div className='catalog__detail-top-side-wrapper'>
                         <p className='catalog__detail-top-side-price'>{product.price} р.</p>
-                        <MyButton
-                        data-id={product._id}
-                        onClick={addToBasket}
-                        style={{width: '60%'}}
-                        >{(onBasket) ? 'Удалить' : 'Добавить в корзину'}</MyButton>
+                        {product.quantity < 1
+                            ?
+                            <MyButton disabled>{'Нет в наличии'}</MyButton>
+                            :
+                            <MyButton
+                            data-id={product._id}
+                            onClick={addToBasket}
+                            style={{width: '60%'}}
+                            >{(onBasket) ? 'Удалить' : 'Добавить в корзину'}</MyButton>
+                        }
+
                     </div>
                     <Link to='../../basket'><MyButton
                     onClick={noop}

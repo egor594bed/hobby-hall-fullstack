@@ -15,16 +15,29 @@ export const ToastsSlice = createSlice({
   initialState,
   reducers: {
     addToast: (state, toast: PayloadAction<IToast>) => {
-      console.log(state.toastList)
       state.toastList = [...state.toastList, toast.payload]
     },
-    autoRemoveToast: (state) => {
-        state.toastList.splice(0, 1)
+    autoRemoveToast: (state, id) => {
+      for (let i = 0; i < state.toastList.length; i++) {
+        if (state.toastList[i].id == id.payload) {
+          state.toastList.splice(i , 1)
+          break
+        }
+        break
+      }
     },
+    removeOnClick: (state, id) => {
+      for (let i = 0; i < state.toastList.length; i++) {
+        if (state.toastList[i].id == id.payload) {
+          state.toastList.splice(i , 1)
+          break
+        }
+      }
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addToast, autoRemoveToast } = ToastsSlice.actions
+export const { addToast, autoRemoveToast, removeOnClick } = ToastsSlice.actions
 
 export default ToastsSlice.reducer

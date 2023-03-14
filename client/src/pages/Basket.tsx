@@ -109,6 +109,7 @@ const Basket = () => {
             if(elem._id !== id) return true
         })
         setBasketArr(newBasket)
+        setUpdate(true)
         dispatch(removeProduct())
     }, [basketArr])
 
@@ -129,7 +130,7 @@ const Basket = () => {
     //Проверка состояния кнопки 
     useEffect(() => {
         if(!update) return
-        if (orderProperty.current?.delivery !== 'none' && orderProperty.current?.payment !== 'none' && checked && basketArr[0]) {
+        if (orderProperty.current?.delivery !== 'none' && orderProperty.current?.payment !== 'none' && checked && basketArr.length > 0) {
             setButtonActive(true)
             setUpdate(false)
         }else {
@@ -258,7 +259,7 @@ const Basket = () => {
                 </>
                 :
                 <div className='basket__auth'>
-                    <p>Для оформления заказа необходимо войти в систему!</p>
+                    <p className='basket__auth-title'>Для оформления заказа необходимо войти в систему!</p>
                     <div className='basket__auth-wrapper'>
                         <div className='basket__auth-borders'>
                             <LoginForm></LoginForm>

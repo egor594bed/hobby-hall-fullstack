@@ -27,10 +27,12 @@ export const authSlice = createSlice({
         login: (state, data) => {
             state.isAuthenticated = true
             state.userId = data.payload.userId
+            localStorage.setItem(storageName, JSON.stringify({userId: data.payload.userId, token: data.payload.token}))
         },
         logout: (state) => {
             state.isAuthenticated = false
             state.userId = null
+            localStorage.removeItem(storageName)
         }
     }
 })
