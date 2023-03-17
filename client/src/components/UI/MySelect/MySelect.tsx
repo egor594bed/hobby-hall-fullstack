@@ -1,20 +1,23 @@
 import React, { FC, memo } from 'react'
 import cl from './MySelect.module.scss'
+import type { FieldValues, UseFormReturn, SubmitHandler, UseFormRegister } from "react-hook-form";
 
-interface IMySelect {
+
+type FormProps<TFormValues extends FieldValues> = {
+    register: UseFormRegister<FieldValues>;
     onChange(e: number | string): void
     data: IMySelectItem[]
-}
+  };
 
 interface IMySelectItem {
     id: string | number
     name: string
 }
 
-const MySelect: FC<IMySelect> = memo(({onChange, ...props}) => {
+const MySelect = <TFormValues extends FieldValues> ({register, onChange,...props}: FormProps<TFormValues>) => {
 
     return (
-        <select className={cl.MySelect} onChange={e => onChange(e.target.value)}>
+        <select className={cl.MySelect} {...register} onChange={e => onChange(e.target.id)}>
             <option value='none'>--Выберите способ--</option>
             {
                 props.data.map((elem) => {
@@ -23,6 +26,6 @@ const MySelect: FC<IMySelect> = memo(({onChange, ...props}) => {
             }
         </select>
     )
-})
+}
 
 export default MySelect

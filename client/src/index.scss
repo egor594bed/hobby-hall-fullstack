@@ -1,5 +1,5 @@
-@import "./scss/_variables.scss";
-@import "./scss/other.scss";
+@import "./assets/scss/_variables.scss";
+@import "./assets/scss/other.scss";
 
 * {
   margin: 0;
@@ -15,7 +15,7 @@ body {
   font-weight: 400;
   color: #494e4e;
   background-color: #eee9e1;
-  background-image: url("./img/fon.jpg");
+  background-image: url("./assets/img/fon.jpg");
   background-attachment: fixed;
 }   
 

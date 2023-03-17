@@ -1,6 +1,7 @@
 import React, { useState, useCallback, memo, FC} from 'react'
 import MySelect from '../UI/MySelect/MySelect'
-import { IPayment } from '../../types/IBaslet'
+import { IPayment } from '../../types/IBasket'
+import type { FieldValues, UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 const paymentArr = [
     {
         name: 'Наличные',
@@ -16,18 +17,18 @@ const paymentArr = [
     },
 ]
 
-interface IBasketPayment {
-    changePayment: (id: 'none' | number) => void
-}
+type FormProps<TFormValues extends FieldValues> = {
+    register: UseFormRegister<FieldValues>;
+    payment: UseFormRegisterReturn<"payment">;
+};
 
-const BasketPayment: FC<IBasketPayment> = memo(({changePayment}) => {
+const BasketPayment = <TFormValues extends FieldValues> ({register}: FormProps<TFormValues>) => {
     const [activePayment, setActivePayment] = useState<IPayment | null>(null)
 
     //Смена активного селекта
     const changeActivePayment = useCallback((id: number | 'none') => {
         if(id === 'none') {
             setActivePayment(null)
-            changePayment('none')
             return
         }
         let newPayment = paymentArr.find((elem) => {
@@ -35,17 +36,15 @@ const BasketPayment: FC<IBasketPayment> = memo(({changePayment}) => {
         })
         if(newPayment !== undefined) {
             setActivePayment(newPayment)
-            changePayment(newPayment.id)
         }else {
             setActivePayment(null)
-            changePayment('none')  
         }
     }, [])
 
     return (
         <div className='basket__payment'>
             <h2 className='basket__payment-title'>Оплата</h2>
-            <MySelect onChange={changeActivePayment} data={paymentArr}></MySelect>
+            <MySelect register={register} onChange={changeActivePayment} data={paymentArr}></MySelect>
                 <div className='basket__payment-wrapper' style={activePayment ? {background: 'none'} : {backgroundImage: `url(${require('../../img/selectImg.png')})`}}>
                     {activePayment &&
                     <>
@@ -59,6 +58,6 @@ const BasketPayment: FC<IBasketPayment> = memo(({changePayment}) => {
         </div>
 
     )
-})
+}
 
 export default BasketPayment

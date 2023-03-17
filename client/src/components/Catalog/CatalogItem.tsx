@@ -50,7 +50,7 @@ const CatalogItem: FC<IProduct> = (data) => {
             <div className='catalog__item' id={data._id}>
                 <div className='catalog__item-wrapper'>
                     <img className='catalog__item-img' src={`/${data.imgSrc}`}
-                    onError={(event)=>(event.target as HTMLElement).setAttribute("src",require('./../../img/nophoto.jpeg'))}
+                    onError={(event)=>(event.target as HTMLElement).setAttribute("src",require('../../assets/img/nophoto.jpeg'))}
                     alt='photo'></img>
                     <div className='catalog__item-text'>
                         <h2 className='catalog__item-title'>{data.name}</h2>

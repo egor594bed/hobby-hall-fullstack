@@ -19,9 +19,9 @@ const CatalogPromoSlider = () => {
             <></>
         )}
         >
-            <img style={{width: "100%", height: "100%"}} src={require("../../img/1234.jpg")} alt="" />
-            <img style={{width: "100%", height: "100%"}} src={require("../../img/1234.jpg")} alt="" />
-            <img style={{width: "100%", height: "100%"}} src={require("../../img/1234.jpg")} alt="" />
+            <img style={{width: "100%", height: "100%"}} src={require("../../assets/img/1234.jpg")} alt="" />
+            <img style={{width: "100%", height: "100%"}} src={require("../../assets/img/1234.jpg")} alt="" />
+            <img style={{width: "100%", height: "100%"}} src={require("../../assets/img/1234.jpg")} alt="" />
         </Carousel>
     )
 }

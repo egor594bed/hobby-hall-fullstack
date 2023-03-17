@@ -14,9 +14,9 @@ const MyToast: FC<IMyToast> = ({id, message, type}) => {
 
     let img = ''
 
-    if (type === 'success') img = require('../../../img/success-icon.png')
-    else if (type === 'error') img = require('../../../img/error-icon.png')
-    else if (type === 'info') img = require('../../../img/info-icon.png')
+    if (type === 'success') img = require('../../../assets/img/success-icon.png')
+    else if (type === 'error') img = require('../../../assets/img/error-icon.png')
+    else if (type === 'info') img = require('../../../assets/img/info-icon.png')
 
     function removeToast() {
         dispatch(removeOnClick(id))

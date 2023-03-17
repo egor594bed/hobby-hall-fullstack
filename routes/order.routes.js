@@ -7,7 +7,7 @@ router.post(
     '/newOrder',
     async (req, res) => {
     try {
-        const {userId, basketArr, comment, data, deliveryId, paymentId, state} = req.body
+        const {userId, basketArr, comment, data, delivery, payment, state} = req.body
         const user = await User.findOne({_id: userId})
         user.password = undefined
 
@@ -17,8 +17,8 @@ router.post(
             productsArr: basketArr,
             clientComment: comment,
             data: data,
-            deliveryId: deliveryId,
-            paymentId: paymentId,
+            deliveryId: delivery,
+            paymentId: payment,
             state: state
         }
 

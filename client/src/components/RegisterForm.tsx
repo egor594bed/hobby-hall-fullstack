@@ -60,13 +60,16 @@ const RegisterForm = memo(() => {
             <h3 className='modal-login__form-title'>Регистрация</h3>
             <input className={cl.MyInput} {...register('email', {
                 required: "Поле обязательно к заполнению",
-                validate: (value) => /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)
+                pattern: {
+                    value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: 'Неверно введенный email'
+                }
             })} placeholder={'Введите ваш email'}></input>
             <div className='formErrors'>
                 {errors?.email && 
                     <>
-                    <img className='formError__img' src={require('../img/formError.png')}></img>
-                    <p className='formError__text'>{errors?.email?.message || 'Неверно введенный email'}</p>
+                    <img className='formError__img' src={require('../assets/img/formError.png')}></img>
+                    <p className='formError__text'>{errors?.email?.message || 'Ошибка ввода'}</p>
                     </>
                 }
             </div>
@@ -80,7 +83,7 @@ const RegisterForm = memo(() => {
             <div className='formErrors'>
                 {errors?.password && 
                     <>
-                    <img className='formError__img' src={require('../img/formError.png')}></img>
+                    <img className='formError__img' src={require('../assets/img/formError.png')}></img>
                     <p className='formError__text'>{errors?.password?.message || 'Ошибка ввода'}</p>
                     </>
                 }
@@ -91,20 +94,23 @@ const RegisterForm = memo(() => {
             <div className='formErrors'>
                 {errors?.name && 
                     <>
-                    <img className='formError__img' src={require('../img/formError.png')}></img>
+                    <img className='formError__img' src={require('../assets/img/formError.png')}></img>
                     <p className='formError__text'>{errors?.name?.message || 'Ошибка ввода'}</p>
                     </>
                 }
             </div>
             <input className={cl.MyInput} {...register('phone', {
                 required: "Поле обязательно к заполнению",
-                validate: (value) => /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/.test(value)
+                pattern: {
+                    value: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/,
+                    message: 'Неверно введенный номер'
+                }
             })} placeholder='Введите ваш номер телефона'></input>
             <div className='formErrors'>
                 {errors?.phone && 
                     <>
-                    <img className='formError__img' src={require('../img/formError.png')}></img>
-                    <p className='formError__text'>{errors?.phone?.message || 'Неверно введенный номер'}</p>
+                    <img className='formError__img' src={require('../assets/img/formError.png')}></img>
+                    <p className='formError__text'>{errors?.phone?.message || 'Ошибка ввода'}</p>
                     </>
                 }
             </div>

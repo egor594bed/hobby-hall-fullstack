@@ -1,4 +1,3 @@
-import React, { useContext } from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import BasketItem from '../components/Basket/BasketItem'
@@ -6,9 +5,6 @@ import { useHttp } from '../hooks/http.hook'
 import { toBasket } from '../utils/toBasket'
 import Loader from '../components/Loader/Loader'
 import { useCallback } from 'react'
-import { useRef } from 'react'
-import BasketDelivery from '../components/Basket/BasketDelivery'
-import BasketPayment from '../components/Basket/BasketPayment'
 import MyButton from '../components/UI/MyButton/MyButton'
 import { IProduct } from '../types/ICatalog'
 import { Link } from 'react-router-dom'
@@ -18,26 +14,17 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { removeProduct, removeAllFromBasket } from '../redux/slices/basket'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
-import { addToast } from '../redux/slices/toasts'
-
-interface IOrderProperty {
-    current?: {
-        delivery: 'none' | number
-        payment: 'none' | number
-    }
-}
+import BasketForm from '../components/Basket/BasketForm'
 
 const Basket = () => {
     const isAuthenticated = useSelector((state: RootState) => state.authSlice.isAuthenticated)
     const {request, loading} = useHttp()
-    const [update, setUpdate] = useState(false)
-    const [checked, setCheked] = useState<boolean>(true)
     const [updateTotal, setUpdateTotal] = useState(false)
-    const [buttonActive, setButtonActive] = useState<boolean>(false)
+    const [disableButton, setDisableButton] = useState<boolean>(true)
     const [basketArr, setBasketArr] = useState<IProduct[]>([])
     const [total, setTotal] = useState(0)
-    const orderProperty: IOrderProperty = useRef()
     const dispatch = useDispatch()
+
 
     useEffect(() => {
         const basketStr = localStorage.getItem('basket') as string
@@ -56,11 +43,6 @@ const Basket = () => {
             setBasketArr(data.basketArr)
             setUpdateTotal(true)
         })
-
-        orderProperty.current = {
-            delivery: 'none',
-            payment: 'none'
-        }
     }, [])
 
     useEffect(() => {
@@ -74,7 +56,6 @@ const Basket = () => {
     const deleteBasketItems = useCallback(() => {
         localStorage.removeItem('basket')
         setBasketArr([])
-        setUpdate(true)
         dispatch(removeAllFromBasket())
     }, [])
 
@@ -109,78 +90,16 @@ const Basket = () => {
             if(elem._id !== id) return true
         })
         setBasketArr(newBasket)
-        setUpdate(true)
         dispatch(removeProduct())
     }, [basketArr])
 
-    //Смена способа доставки/оплаты
-    const changeDelivery = useCallback((id: 'none' | number) => {
-        if(orderProperty.current != undefined) {
-            orderProperty.current.delivery = id
-            setUpdate(true)
-        }
-    }, [])
-    const changePayment = useCallback((id: 'none' | number) => {
-        if(orderProperty.current != undefined) {
-            orderProperty.current.payment = id
-            setUpdate(true)
-        }
-    }, [])
-
     //Проверка состояния кнопки 
     useEffect(() => {
-        if(!update) return
-        if (orderProperty.current?.delivery !== 'none' && orderProperty.current?.payment !== 'none' && checked && basketArr.length > 0) {
-            setButtonActive(true)
-            setUpdate(false)
+        if (basketArr.length > 0) {
+            setDisableButton(false)
         }else {
-            setButtonActive(false)
-            setUpdate(false)
+            setDisableButton(true)
         }
-    }, [update, basketArr])
-
-    // ОТПРАВИТЬ ЗАКАЗ В БД
-    const postNewOrder = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent> ) => {
-        e.preventDefault()
-        const userData = localStorage.getItem('userData') as string
-        const userId = JSON.parse(userData).userId
-
-        const data = () => {
-            const locale = 'ru-ru';
-            const d = new Date();
-
-            const day = d.getDate();
-            const month = d.toLocaleString(locale, { month: 'long' });
-            const year = d.getFullYear();
-
-            const time = d.toLocaleString(locale, { hour12: false, hour: 'numeric', minute: 'numeric'});
-
-            return `${month} ${day}, ${year} @ ${time}`; // May 5, 2019 @ 23:41
-        }
-
-        const commentDiv = document.querySelector('.basket__comment-input') as HTMLInputElement
-        const comment = commentDiv.value
-
-        const form = {
-            userId: userId,
-            data: data(),
-            basketArr: basketArr,
-            deliveryId: orderProperty.current?.delivery,
-            paymentId: orderProperty.current?.payment,
-            comment: comment,
-            state: 'Новый'
-        }
-        
-        request('api/order/newOrder', 'POST', {...form})
-        .then(() => {
-            localStorage.removeItem('basket')
-            setBasketArr([])
-            setUpdate(true)
-            window.scrollTo(0, 0)
-            dispatch(addToast({message: 'Заказ успешно оформлен! Мы с вами свяжемся в ближайшее время! Спасибо за покупки!', type: 'success', id: Date.now()}))
-            dispatch(removeAllFromBasket())
-        })
-
     }, [basketArr])
 
     return (
@@ -229,34 +148,13 @@ const Basket = () => {
                         :
                         <div className='basket__empty'>
                             <p>В корзине пусто, перейти в <Link to='../'>каталог?</Link></p>
-                            <img src={require('../img/empty_basket.png')}></img>
+                            <img src={require('../assets/img/empty_basket.png')}></img>
                         </div>  
                 }
             </div>
             {isAuthenticated
                 ?
-                <>
-                <BasketDelivery changeDelivery={changeDelivery}></BasketDelivery>
-                <BasketPayment changePayment={changePayment}></BasketPayment>
-                <div className='basket__comment'>
-                    <h2 className='basket__comment-title'>Комментарий к заказу</h2>
-                    <div className='basket__comment-wrapper'>
-                        <p className='basket__comment-text'>Вы можете оставить комментарий к заказу, если вам необходимо</p>
-                        <textarea className='basket__comment-input' placeholder='Оставте свой комментарий'/>
-                    </div>
-                </div>
-                <div className='basket__order'>
-                    <div className='basket__order-checkbox-wrapper'>
-                        <input type='checkbox' onClick={e => {
-                            setUpdate(true)
-                            setCheked(!checked)
-                            }}
-                            defaultChecked={checked}></input>
-                        <label>Согласен с бла бла бла</label>
-                    </div>
-                    <MyButton style={{fontSize: '20px'}} disabled={!buttonActive} onClick={postNewOrder}>Оформить заказ</MyButton>
-                </div>
-                </>
+                <BasketForm disableButton={disableButton} setBasketArr={setBasketArr} basketArr={basketArr}/>
                 :
                 <div className='basket__auth'>
                     <p className='basket__auth-title'>Для оформления заказа необходимо войти в систему!</p>
