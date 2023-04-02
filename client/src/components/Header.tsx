@@ -32,7 +32,6 @@ const Header = memo(() => {
                 <div className='header__right'>
                     <div className='header__top'>
                         <Link className='header__top-links' to="/rules">Правила</Link>
-                        <Link className='header__top-links' to="/news">Новинки</Link>
                         <Link className='header__top-links' to="/contacts">Контакты</Link>
                     </div>
                     <div className='header__rigth-middle'>

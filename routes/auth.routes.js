@@ -1,11 +1,9 @@
 const {Router} = require('express')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 const { check, validationResult} = require('express-validator')
-const User = require('../models/User')
 const router = Router()
 const config = require('config')
-// const sendEmail = require('../utils/sendEmail')
+const UserService = require('../service/user-service')
+const tokenService = require('../service/token-service')
 
 module.exports = router;
 
@@ -25,28 +23,16 @@ router.post(
                 errors: errors.array(),
                 message: 'Некорректные данные при регистрации'
             })
-        } 
-
-        const {email, password, name, phone} = req.body;
-
-        //Переделать запросы ниже ???
-        const checkEmail = await User.findOne({ email })
-        const checkPhone = await User.findOne({ phone })
-
-        if (checkEmail || checkPhone) {
-            return res.status(400).json({message: 'Пользователь с таким Email или номером телефона уже существует'})
         }
 
-        const hashedPassword = await bcrypt.hash(password, 5)
-        const user = new User({email, password: hashedPassword, name, phone})
+        const userData = await UserService.registration({...req.body})
 
-        await user.save()
-        // sendEmail('Регистрация на сайте', [email], 'Регистрация на сайте прошла успешно!')
-
-        return res.status(201).json({message: 'Регистрация прошла успешно!'})
+        return res.status(201).json({
+            message: `Письмо для подтверждения регистрации было отправлено на ${userData.email}`
+        })
 
     } catch (e) {
-        return res.status(500).json({message: 'Что-то пошло не так'})
+        return res.status(500).json({message: e.message || 'Что-то пошло не так!'})
     }
 })
 
@@ -65,31 +51,29 @@ router.post(
                 message: 'Некорректные данные при входе в систему'
             })
         }
-        
-        const {email, password} = req.body;
 
-        const user = await User.findOne({email})
+        const loginData = await UserService.login({...req.body})
 
-        if (!user) {
-            return res.status(404).json ({message: 'Неверный email или пароль'})
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password)
-
-        if (!isMatch) {
-            return res.status(400).json({message: 'Неверный email или пароль'})
-        }
-
-        const token = jwt.sign(
-            { userId: user.id, userName: user.name, userPhone: user.phone },
-            config.jwtSecret,
-            {expiresIn: '1h'}
-        )
-        
-        return res.status(200).json({token, userId: user.id, userName: user.name, userPhone: user.phone, message: `Добро пожаловать, ${user.name}!`})
+        res.cookie('refreshToken', loginData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
+        return res.status(200).json({token: loginData.accessToken, userId: loginData.userId, message: `Добро пожаловать, ${loginData.userName}!`})
 
     } catch (e) {
-        return res.status(500).json({message: 'Что-то пошло не так'})
+        return res.status(500).json({message: e.message || 'Что-то пошло не так!'})
     }
     
+})
+
+router.post(
+    '/tokenVerification',
+    async (req, res) => {
+    try {
+        const isValidData = await tokenService.verifyTokens(req.body.userId, {
+            accessToken: req.body.accessToken,
+            refreshToken: req.cookies['refreshToken']
+        })
+        return res.status(200).json(isValidData)
+
+    } catch (e) {
+        return res.status(500).json({message: e.message || 'Что-то пошло не так!'})
+    }
 })

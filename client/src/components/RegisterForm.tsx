@@ -23,34 +23,15 @@ const RegisterForm = memo(() => {
             isValid
         },
         handleSubmit
-
     } = useForm<FormValues>({
         mode: 'onBlur'
     })
 
-    // const [emailValue, setEmailValue] = useState('')
-    // const [passwordValue, setPasswordValue] = useState('')
-    // const [nameValue, setNameValue] = useState('')
-    // const [phoneValue, setPhoneValue] = useState('')
-
-    // if(error) {
-    //     dispatch(addToast({id: Date.now(), message: error, type: 'error'}))
-    //     clearError()
-    // }
-
     const registerHandler = async (data: Object) => {
-
-        // const form = {
-        //     email: emailValue,
-        //     password: passwordValue,
-        //     name: nameValue,
-        //     phone: phoneValue
-        // }
-
         try {
             await request('/api/auth/register', 'POST', {...data})
-            .then(() => {
-                dispatch(addToast({id: Date.now(), message: 'Регистрация прошла успешно!', type: 'success'}))
+            .then((res) => {
+                dispatch(addToast({id: Date.now(), message: res.message, type: 'success'}))
             })
         } catch (e) {}
     }
@@ -114,11 +95,6 @@ const RegisterForm = memo(() => {
                     </>
                 }
             </div>
-
-            {/* <MyInput placeholder="E-mail" type='email' name='email' onChange={setEmailValue} value={emailValue}></MyInput>
-            <MyInput placeholder="Пароль" type='password' name='password' onChange={setPasswordValue} value={passwordValue}></MyInput>
-            <MyInput placeholder="Имя" type='text' name='name' onChange={setNameValue} value={nameValue}></MyInput>
-            <MyInput placeholder="Номер телефона" name='phone' type='tel' onChange={setPhoneValue} value={phoneValue}></MyInput> */}
             <MyButton style={{marginTop: "20px"}} disabled={!isValid}>Регистрация</MyButton>
         </form>
     )

@@ -9,7 +9,7 @@ export function toBasket(id: string) {
 
         if (basketMap.has(id)) {
             basketMap.delete(id)
-            let newBasketArr = new Array
+            let newBasketArr = new Array()
             basketMap.forEach((value, key) => {
                 newBasketArr.push([key, value])
             })

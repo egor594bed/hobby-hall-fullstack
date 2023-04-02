@@ -7,13 +7,13 @@
 //         port: 465,
 //         secure: true,
 //         auth: {
-//             user: 'egor594bed@yandex.ru',
+//             user: 'egor594test@yandex.ru',
 //             pass: 'pass',
 //         },
 //     })
 
-//     let result = await transporter.sendMail({
-//         from: '"Hobby-hall" <egor594bed@yandex.ru>',
+//     await transporter.sendMail({
+//         from: '"Hobby-hall" <egor594test@yandex.ru>',
 //         to: recipientArr,
 //         subject: mailSubject,
 //         text: 'This message was sent from Node js server.',
