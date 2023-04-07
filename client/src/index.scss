@@ -1151,24 +1151,6 @@ ul,ol,li {
   }
 }
 
-// Toast
-
-.toast-item-animate-enter {
-  transform: translateX(350px);
-  
-}
-.toast-item-animate-enter-active {
-  transform: translateX(0);
-  transition: all .3s linear;
-}
-.toast-item-animate-exit {
-  opacity: 1;
-}
-.toast-item-animate-exit-active {
-  transform: translateX(350px);
-  transition: all .5s linear;
-}
-
 // AdminPanel
 
 .admin {
@@ -1333,4 +1315,26 @@ ul,ol,li {
   opacity: 0;
   transform: scale(0.9);
   transition: opacity 300ms, transform 300ms;
+}
+
+// Toast
+
+.toast-item-animate-enter {
+  opacity: 0.9;
+  transform: translateY(350px);
+}
+.toast-item-animate-enter-active {
+  opacity: 0.9;
+  transform: translateY(0);
+  transition: all .5s linear;
+}
+.toast-item-animate-enter-done {
+  opacity: 0.9;
+}
+.toast-item-animate-exit {
+  opacity: 0.9;
+}
+.toast-item-animate-exit-active {
+  opacity: 0;
+  transition: all .5s linear;
 }
