@@ -103,7 +103,7 @@ const Basket = () => {
     }, [basketArr])
 
     return (
-        <div className='basket container'>
+        <div className='basket'>
             <h1 className='basket__title'>Корзина</h1>
             <div className='basket__item-list'>
                 <div className='basket__item-list-header'>

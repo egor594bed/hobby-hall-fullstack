@@ -49,12 +49,17 @@ const CatalogItem: FC<IProduct> = (data) => {
         <Link to={`/catalog/product/${data._id}`} onClick={() => window.scrollTo(0, 0)}>
             <div className='catalog__item' id={data._id}>
                 <div className='catalog__item-wrapper'>
-                    <img className='catalog__item-img' src={`/${data.imgSrc}`}
-                    onError={(event)=>(event.target as HTMLElement).setAttribute("src",require('../../assets/img/nophoto.jpeg'))}
-                    alt='photo'></img>
+                    <div className='catalog__item-img-wrapper'>
+                        <img className='catalog__item-img' src={`/${data.imgSrc}`}
+                        onError={(event)=>(event.target as HTMLElement).setAttribute("src",require('../../assets/img/nophoto.jpeg'))}
+                        alt='photo'></img>
+                    </div>
                     <div className='catalog__item-text'>
                         <h2 className='catalog__item-title'>{data.name}</h2>
-                        <p className="catalog__item-description">{data.description || 'Нет описания'}</p>
+                        {
+                            data.description &&
+                            <p className="catalog__item-description">{data.description}</p>
+                        }
                     </div>
                     <div className='catalog__item-wrapper-bottom'>
                         <h4 className="catalog__item-price">{`${data.price} р.`}</h4>

@@ -10,7 +10,9 @@ const Layout = () => {
         <>  
             <MyToastContainer/>
             <Header></Header>
-            <Outlet></Outlet>
+            <div className='content container'>
+                <Outlet></Outlet>
+            </div>
             <Footer></Footer>
         </>
     )

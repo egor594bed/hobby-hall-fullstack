@@ -48,7 +48,7 @@ const Catalog = () => {
     }, [navigate, params.id, request])
 
     return (
-        <div className='catalog container'>
+        <div className='catalog'>
             <div className='catalog__wrapper'>
                 <div className='catalog__title' onClick={e => setOpenMenu(!openMenu)}>
                     <p>Каталог</p>
