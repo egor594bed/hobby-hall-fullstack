@@ -382,7 +382,70 @@ ul,ol,li {
   padding: 30px 30px 50px;
   background-color: white;
   border-radius: 10px;
+  position: relative;
   z-index: 3;
+}
+
+.catalog__outputArea-sort-list {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  z-index: 4;
+
+  &:hover .catalog__outputArea-sort-list-wrapper {
+    scale: 1;
+    top: -5px;
+    right: -5px;
+  }
+}
+
+.catalog__outputArea-sort-list-button {
+  width: 20px;
+  position: relative;
+  left: calc(100% - 20px);
+  
+  z-index: 4;
+}
+
+.catalog__outputArea-sort-list-wrapper {
+  min-width: 200px;
+  background-color: white;
+  border-top: 30px solid $second-color;
+  box-shadow: 0 0 10px #ecdfc9;
+  border-radius: 5px;
+  position: absolute;
+  top: -75px;
+  right: -75px;
+  overflow: hidden;
+  scale: 0;
+
+  transition: scale .3s, top .3s, right .3s;
+}
+
+.catalog__outputArea-sort-list-item {
+  width: 100%;
+  padding: 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  transition: background-color .3s;
+
+  &:hover {
+    background-color: $first-color;
+  }
+}
+
+.catalog__outputArea-sort-list-item-text {
+  width: max-content;
+  margin-right: 30px;
+  display: block;
+  color: $second-color;
+}
+
+.catalog__outputArea-sort-list-item-check {
+  height: 18px;
 }
 
 .catalog__outputArea-items {

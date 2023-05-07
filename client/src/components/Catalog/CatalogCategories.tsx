@@ -12,7 +12,7 @@ interface ICatalogCategories {
 const CatalogCategories: FC<ICatalogCategories> = (props) => {
     const {request} = useHttp()
     const [catalogList, setCatalogList] = useState<ICategory[]>([])
-    let [active, setActive] = useState<string | boolean>(false);
+    let [active, setActive] = useState<string | false>(false);
 
 
     function isActiveCategory (e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
