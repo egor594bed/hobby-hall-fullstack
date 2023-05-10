@@ -1,12 +1,16 @@
 import { IProduct } from "../types/ICatalog"
 
-export class GoodsService {
+export class ActiveGoodsService {
+    itemsOnPage: number
     id: number
     goodsArr: IProduct[]
+    activeGoodsArr!: IProduct[]
 
-    constructor(array: IProduct[] = [], method: 'stock' | 'price' | 'alphabet') {
+    constructor(array: IProduct[] = [], method: 'stock' | 'price' | 'alphabet', page: number) {
+        this.itemsOnPage = 12
         this.id = Date.now()
         this.goodsArr = array
+        this.changeActiveGoods(page)
         this.sortGoods(method)
     }
 
@@ -34,5 +38,15 @@ export class GoodsService {
             default:
                 break;
         }
+    }
+
+    changeActiveGoods(page: number = 1) {
+        let arr = []
+        for (let i = (page - 1)*this.itemsOnPage; i < page*this.itemsOnPage; i++) {
+            if(this.goodsArr[i] === undefined) break
+            arr.push(this.goodsArr[i])
+        }
+
+        this.activeGoodsArr = arr
     }
 }
