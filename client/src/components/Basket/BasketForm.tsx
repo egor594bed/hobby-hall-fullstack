@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux"
 import { addToast } from '../../redux/slices/toasts'
 import { useForm } from 'react-hook-form'
 import { removeAllFromBasket } from '../../redux/slices/basket'
-
 import { IDelivery } from "../../types/IBasket.js"
 import { IProduct } from "../../types/ICatalog"
 import MyButton from "../UI/MyButton/MyButton"
@@ -106,7 +105,6 @@ const BasketForm: FC<IBasketForm> = ({disableButton, setBasketArr, basketArr}) =
                     </>
                 }
             </div>
-
             <select className={cl.MySelect} {...register('payment', {
                 validate: (value: string) => value != 'none',
                 onChange: (e) => changeActiveOption(e)
@@ -131,7 +129,6 @@ const BasketForm: FC<IBasketForm> = ({disableButton, setBasketArr, basketArr}) =
                     </>
                 }
             </div>
-
             <div className='basket__comment'>
                 <h2 className='basket__comment-title'>Комментарий к заказу</h2>
                 <div className='basket__comment-wrapper'>

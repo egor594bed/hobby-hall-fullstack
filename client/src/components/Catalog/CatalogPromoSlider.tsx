@@ -3,7 +3,6 @@ import Carousel from 'nuka-carousel'
 
 const CatalogPromoSlider = () => {
     return (
-        // <></>
         <Carousel
         autoplay={true}
         wrapAround={true}

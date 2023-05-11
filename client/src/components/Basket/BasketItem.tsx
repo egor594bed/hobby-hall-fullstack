@@ -13,7 +13,7 @@ interface IBasketItem {
 const BasketItem: FC<IBasketItem> = memo(({data, deleteProduct, changeTotal}) => {
     const [counter, setCounter] = useState(data.total || 1)
 
-    function checkCounter(value: number | string) {
+    function checkCounter(value: number | "") {
         if(value === "") {
             setCounter(1)
         }
@@ -56,7 +56,7 @@ const BasketItem: FC<IBasketItem> = memo(({data, deleteProduct, changeTotal}) =>
         <div className='basket__item'>
             <button data-id={data._id} onClick={e => linkProvider(e)} className='basket__item-delete'>X</button>
             <img className='basket__item-img' src={data.imgSrc}
-            onError={(event)=>(event.target as HTMLElement).setAttribute("src",require('../../assets/img/nophoto.jpeg'))}
+            onError={(event)=>(event.target as HTMLElement).setAttribute("src", require('../../assets/img/nophoto.jpeg'))}
             ></img>
             <p className='basket__item-name'>{data.name}</p>
             <div className='basket__item-price-wrapper'>

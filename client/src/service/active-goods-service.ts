@@ -10,12 +10,13 @@ export class ActiveGoodsService {
         this.itemsOnPage = 12
         this.id = Date.now()
         this.goodsArr = array
-        this.changeActiveGoods(page)
         this.sortGoods(method)
+        this.changeActiveGoods(page)
     }
 
     sortGoods(method: 'stock' | 'price' | 'alphabet') {
         switch (method) {
+
             case 'stock': 
                 if (this.goodsArr.length < 2) return
                 this.goodsArr.sort((product) => {
@@ -35,6 +36,7 @@ export class ActiveGoodsService {
                     return 0;
                 })
                 break;
+
             default:
                 break;
         }

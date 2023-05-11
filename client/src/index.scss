@@ -181,8 +181,6 @@ ul,ol,li {
 
 .catalog__categories {
   width: 0;
-  // display: flex;
-  // flex-direction: column;
   transition: width 0.3s, opacity 0.3s;
   z-index: -1;
   opacity: 0;
@@ -240,9 +238,6 @@ ul,ol,li {
   transition: right .5s;
 }
 
-// .catalog__categories-subcategories-wrapper {
-//   height: 0;
-// }
 
 .catalog__categories-subcategories {
   width: 100%;
@@ -266,10 +261,6 @@ ul,ol,li {
     transition: all .3s;
 
     & ul {
-      // position: relative;
-      // top: -100%;
-  
-      // transition: all .3s;
 
       & ol {
         min-height: 50px;
@@ -288,26 +279,6 @@ ul,ol,li {
     
   }
 
-  & + .catalog__categories-subcategories-wrapper ul {
-
-    // width: 100%;
-    // height: 0;
-    // font-size: 0;
-
-
-
-    & ol {
-
-      // left: 0;
-
-      // transition: left .3s, padding .3s;
-
-      &:hover {
-        // left: -5px;
-      }
-    }
-  }
-
   &.active-category {
     background-color: $first-color;
     color: $second-color;
@@ -317,22 +288,10 @@ ul,ol,li {
       max-height: 2000px;
 
       & ul {
-        // top: 0;
 
         & ol {
           border-bottom: 1px solid $second-color;
         }
-      }
-    }
-
-    & + .catalog__categories-subcategories-wrapper ul {
-
-      // height: auto;
-      // font-size: 16px;
-
-      & ol {
-        // padding: 10px;
-
       }
     }
 
@@ -403,7 +362,6 @@ ul,ol,li {
   width: 20px;
   position: relative;
   left: calc(100% - 20px);
-  
   z-index: 4;
 }
 
@@ -469,7 +427,6 @@ ul,ol,li {
       &::after {
         height: 20px;
       }
-
 
       & .catalog__item-description {
         max-height: 150px;
@@ -1087,7 +1044,6 @@ ul,ol,li {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  // position: relative;
 
   &::after {
     content: "";
@@ -1117,13 +1073,6 @@ ul,ol,li {
   color: $second-color;
   font-style: italic;
 }
-
-// <div className='news__item'>
-// <img className='news__item-img' src={require('../../img/nophoto.jpeg')}></img>
-// <p className='news__item-text'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati a incidunt repellendus explicabo vitae quaerat dolore maiores accusantium, aut dolorem voluptates unde? Voluptatem neque quibusdam expedita aliquam animi officiis amet?</p>
-// <p className='news__item-date'>05.05.1994</p>
-// </div>
-
 
 // Footer
 

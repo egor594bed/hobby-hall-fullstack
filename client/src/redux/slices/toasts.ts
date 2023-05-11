@@ -37,7 +37,6 @@ export const ToastsSlice = createSlice({
   },
 })
 
-// Action creators are generated for each case reducer function
 export const { addToast, autoRemoveToast, removeOnClick } = ToastsSlice.actions
 
 export default ToastsSlice.reducer

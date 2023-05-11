@@ -1,5 +1,4 @@
 import React, { memo, useEffect, useState } from 'react'
-import Carousel from 'nuka-carousel'
 import { useHttp } from '../../hooks/http.hook'
 import { IProduct } from '../../types/ICatalog'
 import Loader from '../Loader/Loader'

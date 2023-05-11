@@ -1,6 +1,6 @@
-import React, { FC, memo } from 'react'
+import React from 'react'
 import cl from './MySelect.module.scss'
-import type { FieldValues, UseFormReturn, SubmitHandler, UseFormRegister } from "react-hook-form";
+import type { FieldValues, UseFormRegister } from "react-hook-form";
 
 
 type FormProps<TFormValues extends FieldValues> = {

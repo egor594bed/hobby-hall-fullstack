@@ -1,21 +1,8 @@
-import React, { useState, useCallback, memo, FC} from 'react'
+import React, { useState, useCallback} from 'react'
 import MySelect from '../UI/MySelect/MySelect'
 import { IPayment } from '../../types/IBasket'
 import type { FieldValues, UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
-const paymentArr = [
-    {
-        name: 'Наличные',
-        id: 1,
-        imgName: 'nalichnye_1.jpg',
-        text: 'Оплата наличными или картой при получении товара в магазине (самовывоз).'
-    },
-    {
-        name: 'Оплата на карту',
-        id: 2,
-        imgName: 'oplata_na_kartu_1.jpg',
-        text: 'После обработки заказа номер карты будет отправлен на e-mail или страницу ВК, указанную при регистрации.'
-    },
-]
+import paymentArr from '../../assets/const/payment';
 
 type FormProps<TFormValues extends FieldValues> = {
     register: UseFormRegister<FieldValues>;

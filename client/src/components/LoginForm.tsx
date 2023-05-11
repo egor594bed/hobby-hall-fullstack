@@ -26,16 +26,6 @@ const LoginForm = memo(() => {
         mode: 'onBlur'
     })
 
-
-    // const [emailValue, setEmailValue] = useState('')
-    // const [passwordValue, setPasswordValue] = useState('')
-
-    // if(error) {
-        
-    //     dispatch(addToast({id: Date.now(), message: error, type: 'error'}))
-    //     clearError()
-    // }
-
     const loginHandler = async (data: Object) => {
  
         try {
@@ -84,8 +74,6 @@ const LoginForm = memo(() => {
                     </>
                 }
             </div>
-            {/* <MyInput placeholder="E-mail" type='email' name='email' onChange={setEmailValue} value={emailValue}></MyInput>
-            <MyInput placeholder="Пароль" type='password' name='password' onChange={setPasswordValue} value={passwordValue}></MyInput> */}
             <MyButton style={{marginTop: "20px"}} disabled={!isValid}>Войти</MyButton>
         </form>
     )

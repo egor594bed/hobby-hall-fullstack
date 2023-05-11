@@ -1,5 +1,4 @@
 import React, { FC, memo, useMemo, useRef } from 'react'
-import { useEffect } from 'react'
 import { useState } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 import { IProduct } from '../../types/ICatalog'
@@ -23,10 +22,6 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loadin
     const [page, setPage] = useState<number>(1)
     const [sortType, setSortType] = useState<'stock' | 'price' | 'alphabet'>('stock')
 
-    // useEffect(() => {
-    //     setPage(1)
-    // }, [activeGoodsList])
-
     let goodsServiseList = useMemo(() => {
         setPage(1)
         let newArr = new ActiveGoodsService(activeGoodsList, sortType, page)
@@ -49,23 +44,6 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loadin
         setPage(activePage)
         window.scrollTo(0, 0)
     }
-
-    // function pagination() {
-    //     const pages = Math.ceil(sortedList.length/goodsServiseList.itemsOnPage)
-    //     if (pages <= 1) return []
-    //     const pagesElements = []
-    //     for (let i = 0; i < pages; i++) {
-    //         pagesElements.push(
-    //             <div
-    //             className={(page == i + 1) ? 'catalog__outputArea-pagination-btn catalog__outputArea-pagination-btn-active' : 'catalog__outputArea-pagination-btn'}
-    //             key={i}
-    //             id={(i + 1).toString()}
-    //             onClick={e => changePage(e)}
-    //             >{i + 1}</div>)
-    //     }
-    //     return pagesElements
-    // }
-
 
     if(params.id) {
         return (
@@ -97,11 +75,6 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loadin
                         {pages > 1 &&
                         <div className='catalog__outputArea-pagination'>
                             <MyPagination activePage={page} setActivePage={changePage} pages={pages}></MyPagination>
-                            {
-                                // pagination().map((elem) => {
-                                //     return elem
-                                // })
-                            }
                         </div>
                         }
                         </>

@@ -1,7 +1,6 @@
 const {Router} = require('express')
 const { check, validationResult} = require('express-validator')
 const router = Router()
-const config = require('config')
 const UserService = require('../service/user-service')
 const tokenService = require('../service/token-service')
 

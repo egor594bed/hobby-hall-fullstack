@@ -4,7 +4,6 @@ interface IBasketSlice {
     basketCount: number
 }
 
-
 const initialState: IBasketSlice = {
     basketCount: getInitBasketArr()
 }
@@ -16,6 +15,7 @@ function getInitBasketArr() {
 }
 
 export const basketSlice = createSlice({
+    // Добавить слайс для товаров в корзине?
     name: 'basketSlice',
     initialState,
     reducers: {
@@ -31,7 +31,6 @@ export const basketSlice = createSlice({
     }
 })
 
-// Action creators are generated for each case reducer function
 export const { addProduct, removeProduct, removeAllFromBasket } = basketSlice.actions
 
 export default basketSlice.reducer

@@ -4,19 +4,8 @@ const path = require('path')
 const Categories = require('../models/Categories')
 const subCategories = require('../models/SubCategories')
 const Goods = require('../models/Goods')
-const User = require('../models/User')
 const { Types } = require('mongoose')
 const router = Router()
-
-function sort(productList) {
-    if (productList.length < 2) return productList
-    productList.sort((a) => {
-        if(a.quantity < 1) return 1
-        else return -1
-    })
-
-    return productList
-}
 
 router.get(
     '/getCategory',
@@ -48,8 +37,8 @@ router.get(
         const goodsArr = await Goods.find().lean()
 
         const activeCategoryGoods = goodsArr.filter((item) => item.subCategoryId.toString() == req.query.id)
-        const sortedList = sort(activeCategoryGoods)
-        return res.status(200).json({activeCategoryGoods: sortedList})
+
+        return res.status(200).json({activeCategoryGoods})
     } catch (e) {
         return res.status(500).json({message: 'Что-то пошло не так'})
     }
@@ -73,10 +62,8 @@ router.get(
     try {
         
         const goodsArr = await Goods.find({"name": {$regex: req.query.search, $options: "i"}}).lean()
-        
-        const sortedArr = sort(goodsArr)
 
-        return res.status(200).json({activeCategoryGoods: sortedArr})
+        return res.status(200).json({activeCategoryGoods: goodsArr})
     } catch (e) {
         return res.status(500).json({message: 'Что-то пошло не так'})
     }
