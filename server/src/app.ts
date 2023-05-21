@@ -17,10 +17,10 @@ app.use('/api/order', require("./routes/order.routes"));
 app.use('/server/assets/goodsImgs', express.static(path.join(__dirname, '../assets/goodsImgs')));
 
 if (process.env.NODE_ENV === 'production') {
-    app.use('/', express.static(path.join(__dirname, 'client', 'build')))
+    app.use('/', express.static(path.join(__dirname, '../../client', 'build')))
 
     app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+        res.sendFile(path.resolve(__dirname, '../../client', 'build', 'index.html'))
     })
 }
 
