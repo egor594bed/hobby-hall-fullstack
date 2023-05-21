@@ -51,7 +51,7 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loadin
                 <div className='catalog__outputArea'>
                     <Outlet></Outlet>
                 </div>
-                {/* <CatalogRecommendedSlider/> */}
+                <CatalogRecommendedSlider/>
             </div>
         )
     }
@@ -79,8 +79,7 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loadin
                         }
                         </>
                         :
-                        // <CatalogPromoSlider/>
-                        <></>
+                        <CatalogPromoSlider/>
                     }
                 </CSSTransition>
             </div>
