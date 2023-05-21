@@ -15,10 +15,8 @@ const Catalog = () => {
     const params = useParams()
     const navigate = useNavigate()
 
-    const getGoodsId = useCallback((e: React.MouseEvent<HTMLOListElement, MouseEvent>) => {
+    const getGoodsId = useCallback((id: string) => {
         setActiveGoodsList([])
-        const target = e.target as Element
-        const id = target.id
         if(params.id) navigate(-1)
         async function getGoods() {
             request(`/api/catalog/getGoodsFromId?id=${id}`)

@@ -4,14 +4,16 @@ import {Router, Request, Response} from 'express'
 import Categories from '../models/Categories'
 import subCategories from '../models/SubCategories'
 import Goods from '../models/Goods'
+import { ObjectId } from 'mongoose'
 const router = Router()
 
 interface ISubCategories {
-    name: string;
+    name: string
     categoryId: string;
 }
 
 interface ICatalog {
+    id: string
     name: string
     subCategories: ISubCategories[]
 }
@@ -28,6 +30,7 @@ router.get(
         catalog.map((elem) => {
             let arr = sub.filter(item => item.categoryId.toString() === elem._id.toString())
             marge.push({
+                id: String(elem._id),
                 name: elem.name,
                 subCategories: arr
             })

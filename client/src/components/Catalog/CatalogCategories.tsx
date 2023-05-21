@@ -5,7 +5,7 @@ import { useHttp } from '../../hooks/http.hook';
 import { ICategory } from '../../types/ICatalog';
 
 interface ICatalogCategories {
-    getGoodsId: (e: React.MouseEvent<HTMLOListElement, MouseEvent>) => void
+    getGoodsId: (id: string) => void
     visible: boolean
 }
 
@@ -15,9 +15,7 @@ const CatalogCategories: FC<ICatalogCategories> = (props) => {
     let [active, setActive] = useState<string | false>(false);
 
 
-    function isActiveCategory (e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-        const target = e.target as Element
-        const id = target.id
+    function isActiveCategory (id: string) {
         if(active === id) {
             setActive(false)
         }else {
@@ -38,17 +36,16 @@ const CatalogCategories: FC<ICatalogCategories> = (props) => {
             <div className='catalog__categories-wrapper'>
             {catalogList.map((elem) => {
                 return (
-                    <div key={elem._id}>
-                        <div className={(active === elem._id) ? 'catalog__categories-subcategories active-category' : 'catalog__categories-subcategories'}
-                        id={elem._id}
-                        onClick={(e) => isActiveCategory(e)}>
+                    <div key={elem.id}>
+                        <div className={(active === elem.id) ? 'catalog__categories-subcategories active-category' : 'catalog__categories-subcategories'}
+                        onClick={() => isActiveCategory(elem.id)}>
                             {elem.name}
                         </div>
                         <div className='catalog__categories-subcategories-wrapper'>
                             <ul>
                                 {elem.subCategories.map((elem) => {
                                     return (
-                                    <ol id={elem._id} key={elem._id} onClick={(e) => props.getGoodsId(e)}>
+                                    <ol key={elem._id} onClick={() => props.getGoodsId(elem._id)}>
                                         {elem.name}
                                     </ol>
                                     )

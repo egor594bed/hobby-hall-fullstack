@@ -79,7 +79,8 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loadin
                         }
                         </>
                         :
-                        <CatalogPromoSlider/>
+                        // <CatalogPromoSlider/>
+                        <></>
                     }
                 </CSSTransition>
             </div>

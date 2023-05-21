@@ -63,7 +63,7 @@ const AdminAdd = () => {
             <select name='category' onChange={e => setNewStates(e.target.value)}>
             {
                 catalogList.map((elem) => {
-                    return <option key={elem._id} value={elem._id}>{elem.name}</option>
+                    return <option key={elem.id} value={elem.id}>{elem.name}</option>
                 })
             }
             </select>
@@ -72,7 +72,7 @@ const AdminAdd = () => {
             {(activeCategory)
                 ?
                 catalogList.map ((elem) => {
-                    if(elem._id == activeCategory) {
+                    if(elem.id == activeCategory) {
                         return elem.subCategories.map((elem: ISubCategory) => {
                             return <option key={elem._id} value={elem._id}>{elem.name}</option>
                         })
