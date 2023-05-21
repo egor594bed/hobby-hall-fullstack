@@ -1,20 +1,20 @@
-const express = require('express');
-const config = require('config');
-const mongoose = require('mongoose');
-const path = require('path')
-const cors = require('cors')
-const cookieParser = require('cookie-parser')
+import express from 'express'
+import config from 'config'
+import mongoose from 'mongoose'
+import path from 'path'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 const app = express();
 
-app.use(express.json({extended: true}))
+app.use(express.json({extended: true} as any))
 app.use(cookieParser())
 app.use(cors())
 
 app.use('/api/auth', require("./routes/auth.routes"));
 app.use('/api/catalog', require("./routes/catalog.routes"));
 app.use('/api/order', require("./routes/order.routes"));
-app.use('/assets/goodsImgs', express.static(path.join(__dirname, '/assets/goodsImgs')));
+app.use('/server/assets/goodsImgs', express.static(path.join(__dirname, '../assets/goodsImgs')));
 
 if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client', 'build')))
@@ -23,18 +23,20 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
 }
+console.log(123111)
 
-const PORT = config.port || 5000;
+const PORT = config.get("port") || 5000;
+const uri = config.get<string>("mongoUri")
 
 async function start() {
     try {
         mongoose.set('strictQuery', false);
-        await mongoose.connect(config.mongoUri, {
+        await mongoose.connect(uri, {
             useNewUrlParser: true,
             useUnifiedTopology: true
-        })
+        } as mongoose.ConnectOptions)
         app.listen(PORT, () => console.log(`App has been started on port ${PORT}`));
-    } catch (e) {
+    } catch (e: any) {
         console.log('Server Error', e.message)
         process.exit(1)
     }

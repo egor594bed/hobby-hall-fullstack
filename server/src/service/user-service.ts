@@ -1,12 +1,45 @@
-const User = require('../models/User')
-const uuid = require('uuid')
-const bcrypt = require('bcryptjs')
-const TokenService = require('./token-service')
-const sendEmail = require('../utils/sendEmail')
-const ActivationLink = require('../models/ActivationLink')
+import uuid from 'uuid'
+import bcrypt from 'bcryptjs'
+import TokenService from './token-service'
+// import sendEmail from '../utils/sendEmail'
+import User from '../models/User'
+import ActivationLink from '../models/ActivationLink'
+import { IUser } from "../types/IUser"
+
+interface IUserService {
+    registration(data: IUser): Promise<{ email: string; }>
+    login(data: IUser): Promise<{
+        userId: string,
+        userName: string,
+        accessToken: string,
+        refreshToken: string 
+    }>
+}
+
+type token = string
+type tokens = {
+    accessToken: token
+    refreshToken: token
+}
+interface IPayloadGen {
+    email: string
+    userId: string
+}
+
+interface ITokenService {
+    generateTokens(payload: IPayloadGen): tokens
+    saveToken(userId: string, refreshToken: string): Promise<token>
+    verifyAccessToken(token: token): boolean
+    verifyRefreshToken(token: token): boolean
+    findToken(token: string): token
+    verifyTokens(userId: string, email: string, tokens: tokens): Promise<{
+        userId: string;
+        token: any;
+    } | null>
+}
 
 class UserService {
-    async registration(userData) {
+    async registration(userData: IUser) {
         const checkEmail = await User.findOne({ email: userData.email })
 
         if (checkEmail) {
@@ -24,8 +57,7 @@ class UserService {
         return {email: userData.email}
     }
     
-    async login(loginData) {
-
+    async login(loginData: IUser) {
         const user = await User.findOne({email: loginData.email})
 
         if (!user) {
@@ -38,17 +70,16 @@ class UserService {
             throw new Error('Неверный email или пароль')
         }
 
-        const tokens = await TokenService.generateTokens({email: loginData.email, userId: user._id})
-        TokenService.saveToken(user._id, tokens.refreshToken)
+        const tokens = await TokenService.generateTokens({email: loginData.email, userId: String(user._id)})
+        TokenService.saveToken(String(user._id), tokens.refreshToken)
 
         return {
-            userId: user._id,
+            userId: String(user._id),
             userName: user.name,
             accessToken: tokens.accessToken,
             refreshToken: tokens.refreshToken
         }
-
     }
 }
 
-module.exports = new UserService()
+export default new UserService()

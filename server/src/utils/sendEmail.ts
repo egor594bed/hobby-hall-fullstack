@@ -1,6 +1,6 @@
-// const nodemailer = require('nodemailer')
+// import nodemailer from 'nodemailer'
 
-// async function sendEmail(mailSubject, recipientArr, mailBody) {
+// export default async function sendEmail(mailSubject, recipientArr, mailBody) {
 
 //     let transporter = nodemailer.createTransport({
 //         host: 'smtp.yandex.ru',
@@ -20,5 +20,3 @@
 //         html: mailBody,
 //     })
 // }
-
-// module.exports = sendEmail

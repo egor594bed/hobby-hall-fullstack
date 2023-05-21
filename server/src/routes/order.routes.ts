@@ -1,15 +1,15 @@
-const {Router} = require('express')
+import {Router, Request, Response} from 'express'
+import Order from '../models/Order'
+import User from '../models/User'
 const router = Router()
-const Order = require('../models/Order')
-const User = require('../models/User')
 
 router.post(
     '/newOrder',
-    async (req, res) => {
+    async (req: Request, res: Response) => {
     try {
         const {userId, basketArr, comment, data, delivery, payment, state} = req.body
         const user = await User.findOne({_id: userId})
-        user.password = undefined
+        user!.password = ""
 
         //deliveryId и paymentId заменить на название, когда добавлю их в базу???
         const newOrder = {
@@ -33,7 +33,7 @@ router.post(
 
 router.post(
     '/changeOrder',
-    async (req, res) => {
+    async (req: Request, res: Response) => {
     try {
         const {orderId, state, orderComment} = req.body
 
@@ -50,7 +50,7 @@ router.post(
 
 router.get(
     '/getOrderList',
-    async (req, res) => {
+    async (req: Request, res: Response) => {
     try {
         const orederList = await Order.find().lean()
 

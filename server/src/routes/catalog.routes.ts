@@ -1,26 +1,39 @@
-const {Router} = require('express')
-const multer = require('multer')
-const path = require('path')
-const Categories = require('../models/Categories')
-const subCategories = require('../models/SubCategories')
-const Goods = require('../models/Goods')
-const { Types } = require('mongoose')
+import {Router, Request, Response} from 'express'
+// import multer from 'multer'
+// import path from 'path'
+import Categories from '../models/Categories'
+import subCategories from '../models/SubCategories'
+import Goods from '../models/Goods'
 const router = Router()
+
+interface ISubCategories {
+    name: string;
+    categoryId: string;
+}
+
+interface ICatalog {
+    name: string
+    subCategories: ISubCategories[]
+}
 
 router.get(
     '/getCategory',
-    async (req, res) => {
+    async (req: Request, res: Response) => {
         
     try {
         const catalog = await Categories.find().lean()
         const sub = await subCategories.find().lean()
+        const marge = [] as ICatalog[]
 
         catalog.map((elem) => {
             let arr = sub.filter(item => item.categoryId.toString() === elem._id.toString())
-            elem["subCategories"] = arr
+            marge.push({
+                name: elem.name,
+                subCategories: arr
+            })
         })
 
-        return res.status(200).json({catalog: catalog})
+        return res.status(200).json({catalog: marge})
 
     } catch (e) {
         return res.status(500).json({message: 'Что-то пошло не так'})
@@ -29,7 +42,7 @@ router.get(
 
 router.get(
     '/getGoodsFromId',
-    async (req, res) => {
+    async (req: Request, res: Response) => {
     try {
 
         // const goodsArr = await Goods.find({subCategoryId: Types.ObjectId(req.query.id)}).lean()
@@ -46,7 +59,7 @@ router.get(
 
 router.get(
     '/getRecommendedItems',
-    async (req, res) => {
+    async (req: Request, res: Response) => {
     try {
         const goodsArr = await Goods.find().limit(4).lean()
 
@@ -58,7 +71,7 @@ router.get(
 
 router.get(
     '/getGoodsFromSearch',
-    async (req, res) => {
+    async (req: Request, res: Response) => {
     try {
         
         const goodsArr = await Goods.find({"name": {$regex: req.query.search, $options: "i"}}).lean()
@@ -71,7 +84,7 @@ router.get(
 
 router.get(
     '/getProduct',
-    async (req, res) => {
+    async (req: Request, res: Response) => {
     try {
 
         const product = await Goods.findOne({_id: req.query.id}).lean()
@@ -85,7 +98,7 @@ router.get(
 
 router.post(
     '/getBasketGoods',
-    async (req, res) => {
+    async (req: Request, res: Response) => {
     try {
         let resArr = []
         for (let i = 0; i < req.body.length; i++) {
@@ -99,51 +112,51 @@ router.post(
     }
 })
 
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'assets/goodsImgs')
-    },
-    filename: function(req, file, cb) {   
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-})
+// const storage = multer.diskStorage({
+//     destination: function(req, file, cb) {
+//         cb(null, 'assets/goodsImgs')
+//     },
+//     filename: function(req, file, cb) {   
+//         cb(null, Date.now() + path.extname(file.originalname));
+//     }
+// })
 
-const fileFilter = (req, file, cb) => {
-    const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-    if(allowedFileTypes.includes(file.mimetype)) {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
-}
+// const fileFilter = (req, file, cb) => {
+//     const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+//     if(allowedFileTypes.includes(file.mimetype)) {
+//         cb(null, true);
+//     } else {
+//         cb(null, false);
+//     }
+// }
 
-let upload = multer({storage, fileFilter})
+// let upload = multer({storage, fileFilter})
 
-router.post(
-    '/setProduct',
-    [
-        upload.single('img')
-    ],
-    async (req, res) => {
-    try {
-        let {name, description, price, article, quantity, subCategory} = req.body
-        const newProduct = {
-            name,
-            description,
-            price: Number(price),
-            article,
-            imgSrc: req.file.path,
-            quantity: Number(quantity),
-            subCategoryId: Types.ObjectId(subCategory)
-        }
+// router.post(
+//     '/setProduct',
+//     [
+//         upload.single('img')
+//     ],
+//     async (req: Request, res: Response) => {
+//     try {
+//         let {name, description, price, article, quantity, subCategory} = req.body
+//         const newProduct = {
+//             name,
+//             description,
+//             price: Number(price),
+//             article,
+//             imgSrc: req.file.path,
+//             quantity: Number(quantity),
+//             subCategoryId: Types.ObjectId(subCategory)
+//         }
 
-        const product = new Goods(newProduct)
-        await product.save()
+//         const product = new Goods(newProduct)
+//         await product.save()
 
-        return res.status(201).json({message: `Товар добавлен: ${newProduct.name}`})
-    } catch (e) {
-        return res.status(500).json({message: 'Что-то пошло не так'})
-    }
-})
+//         return res.status(201).json({message: `Товар добавлен: ${newProduct.name}`})
+//     } catch (e) {
+//         return res.status(500).json({message: 'Что-то пошло не так'})
+//     }
+// })
 
 module.exports = router;

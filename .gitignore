@@ -15,6 +15,9 @@ build
 /client/node_modules
 /client/build
 
+/sever/node_modules
+/sever/build
+
 # misc
 .DS_Store
 .env.local

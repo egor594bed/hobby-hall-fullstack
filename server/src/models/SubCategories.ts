@@ -1,8 +1,8 @@
-const {Schema, model} = require('mongoose')
+import {Schema, model} from 'mongoose'
 
 const schema = new Schema ({
     name: {type: String, required: true},
     categoryId: {type: String, required: true}
 })
 
-module.exports = model('subCategories', schema, 'subCategories')
+export default model('subCategories', schema, 'subCategories')

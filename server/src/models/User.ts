@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose')
+import {Schema, model} from 'mongoose'
 
 const schema = new Schema ({
     email: {type: String, required: true, unique: true},
@@ -9,4 +9,4 @@ const schema = new Schema ({
     // activationLink: {type: String}
 })
 
-module.exports = model('User', schema)
+export default model('User', schema)

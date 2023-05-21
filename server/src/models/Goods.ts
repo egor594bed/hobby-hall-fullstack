@@ -1,4 +1,4 @@
-const {Schema, model, Types} = require('mongoose')
+import {Schema, model, Types} from 'mongoose'
 
 const schema = new Schema ({
     name: {type: String, required: true},
@@ -11,4 +11,4 @@ const schema = new Schema ({
 
 })
 
-module.exports = model('Goods', schema, 'goods')
+export default model('Goods', schema, 'goods')
