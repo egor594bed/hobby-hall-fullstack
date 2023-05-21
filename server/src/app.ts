@@ -23,7 +23,6 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
 }
-console.log(123111)
 
 const PORT = config.get("port") || 5000;
 const uri = config.get<string>("mongoUri")

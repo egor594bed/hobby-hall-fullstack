@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "nodemon build/app.js",
-    "server": "concurrently \"tsc -w\" \"nodemon -w dist build/app.js\""
+    "server:dev": "concurrently \"tsc -w\" \"nodemon -w dist build/app.js\"",
+    "server": "cross-env NODE_ENV=production node build/app.js"
   },
   "keywords": [],
   "author": "",
