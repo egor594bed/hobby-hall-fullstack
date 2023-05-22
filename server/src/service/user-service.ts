@@ -6,38 +6,6 @@ import User from '../models/User'
 import ActivationLink from '../models/ActivationLink'
 import { IUser } from "../types/IUser"
 
-interface IUserService {
-    registration(data: IUser): Promise<{ email: string; }>
-    login(data: IUser): Promise<{
-        userId: string,
-        userName: string,
-        accessToken: string,
-        refreshToken: string 
-    }>
-}
-
-type token = string
-type tokens = {
-    accessToken: token
-    refreshToken: token
-}
-interface IPayloadGen {
-    email: string
-    userId: string
-}
-
-interface ITokenService {
-    generateTokens(payload: IPayloadGen): tokens
-    saveToken(userId: string, refreshToken: string): Promise<token>
-    verifyAccessToken(token: token): boolean
-    verifyRefreshToken(token: token): boolean
-    findToken(token: string): token
-    verifyTokens(userId: string, email: string, tokens: tokens): Promise<{
-        userId: string;
-        token: any;
-    } | null>
-}
-
 class UserService {
     async registration(userData: IUser) {
         const checkEmail = await User.findOne({ email: userData.email })

@@ -20,8 +20,8 @@ const Catalog = () => {
         if(params.id) navigate(-1)
         async function getGoods() {
             request(`/api/catalog/getGoodsFromId?id=${id}`)
-            .then(response => {
-                setActiveGoodsList(response.activeCategoryGoods)
+            .then(res => {
+                setActiveGoodsList([...res.goodsArr])
             })
         }
         getGoods()
@@ -37,8 +37,8 @@ const Catalog = () => {
             searchDelay.current = setTimeout(() => {
                 if (params.id) navigate(-1)
                 request(`/api/catalog/getGoodsFromSearch?search=${value}`)
-                .then(response => {
-                    setActiveGoodsList(response.activeCategoryGoods)
+                .then(res => {
+                    setActiveGoodsList([...res.goodsArr])
                 })
             }, 1000)
         }

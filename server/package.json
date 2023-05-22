@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "nodemon build/app.js",
-    "server:dev": "concurrently \"tsc -w\" \"nodemon -w dist build/app.js\"",
+    "server:dev": "concurrently \"tsc -w\" \"nodemon build/app.js\"",
     "server": "cross-env NODE_ENV=production node build/app.js"
   },
   "keywords": [],
@@ -21,7 +21,6 @@
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.8.0",
-    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.1",
     "uuid": "^9.0.0"
   },

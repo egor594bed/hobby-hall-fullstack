@@ -21,7 +21,7 @@ const MyPagination:FC<IMyPagination> = ({activePage, pages, setActivePage}) => {
                         className={(activePage == i + 1) ? 'catalog__outputArea-pagination-btn catalog__outputArea-pagination-btn-active' : 'catalog__outputArea-pagination-btn'}
                         key={i}
                         id={(i + 1).toString()}
-                        onClick={e => setActivePage(i + 1)}
+                        onClick={() => setActivePage(i + 1)}
                         >
                         {i + 1}
                     </div>

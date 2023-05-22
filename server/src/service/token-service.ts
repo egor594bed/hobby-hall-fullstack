@@ -13,18 +13,6 @@ type tokens = {
     refreshToken: token
 }
 
-interface ITokenService {
-    generateTokens(payload: IPayloadGen): tokens
-    saveToken(userId: string, refreshToken: string): Promise<token>
-    verifyAccessToken(token: token): boolean
-    verifyRefreshToken(token: token): boolean
-    findToken(token: string): token
-    verifyTokens(userId: string, email: string, tokens: tokens): Promise<{
-        userId: string;
-        token: any;
-    } | null>
-}
-
 class TokenService {
     generateTokens(payload: IPayloadGen) {
         const accessToken = jwt.sign(payload, config.get<string>("jwtAccess"), {expiresIn: '1h'})

@@ -10,7 +10,7 @@ const CatalogRecommendedSlider = memo(() => {
 
     useEffect(() => {
         request(window.location.origin + '/api/catalog/getRecommendedItems')
-        .then(res => setItems(res.items))
+        .then(res => setItems([...res.goodsArr]))
     }, [request])
 
     if(items === undefined || loading) {

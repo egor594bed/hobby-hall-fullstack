@@ -12,7 +12,7 @@ interface ICatalogCategories {
 const CatalogCategories: FC<ICatalogCategories> = (props) => {
     const {request} = useHttp()
     const [catalogList, setCatalogList] = useState<ICategory[]>([])
-    let [active, setActive] = useState<string | false>(false);
+    const [active, setActive] = useState<string | false>(false);
 
 
     function isActiveCategory (id: string) {
@@ -25,7 +25,7 @@ const CatalogCategories: FC<ICatalogCategories> = (props) => {
 
     useEffect(() => {
         try {
-            request('/api/catalog/getCategory', 'GET')
+            request('/api/catalog/getCatalog', 'GET')
             .then((data => setCatalogList(data.catalog)))
         } catch (error) {}
     }, [])
@@ -36,9 +36,9 @@ const CatalogCategories: FC<ICatalogCategories> = (props) => {
             <div className='catalog__categories-wrapper'>
             {catalogList.map((elem) => {
                 return (
-                    <div key={elem.id}>
-                        <div className={(active === elem.id) ? 'catalog__categories-subcategories active-category' : 'catalog__categories-subcategories'}
-                        onClick={() => isActiveCategory(elem.id)}>
+                    <div key={elem._id}>
+                        <div className={(active === elem._id) ? 'catalog__categories-subcategories active-category' : 'catalog__categories-subcategories'}
+                        onClick={() => isActiveCategory(elem._id)}>
                             {elem.name}
                         </div>
                         <div className='catalog__categories-subcategories-wrapper'>

@@ -1,13 +1,12 @@
-export interface ICategory {
-    _id: string
+export interface ISubCategories {
     name: string
-    subCategories: ISubCategory[]
+    categoryId: string;
 }
 
-export interface ISubCategory {
+export interface ICatalog {
     _id: string
     name: string
-    categoryId: string
+    subCategories: ISubCategories[]
 }
 
 export interface IProduct {
