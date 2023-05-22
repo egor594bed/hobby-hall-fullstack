@@ -7,7 +7,7 @@ import { IProduct } from '../types/ICatalog'
 import { useHttp } from '../hooks/http.hook'
 
 const Catalog = () => {
-    const [openMenu, setOpenMenu] = useState(false)
+    const [openMenu, setOpenMenu] = useState(true)
 
     const {loading, request} = useHttp()
     const [activeGoodsList, setActiveGoodsList] = useState<IProduct[] | []>([])
@@ -55,7 +55,7 @@ const Catalog = () => {
             </div>
             <div className='catalog__middle'>
                 <CatalogCategories getGoodsId={getGoodsId} visible={openMenu}></CatalogCategories>
-                <CatalogOutputArea activeGoodsList={activeGoodsList} loading={loading}></CatalogOutputArea>
+                <CatalogOutputArea activeGoodsList={activeGoodsList} openMenu={openMenu} loading={loading}></CatalogOutputArea>
             </div>
         </div>
     )

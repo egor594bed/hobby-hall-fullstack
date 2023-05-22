@@ -1,4 +1,4 @@
-import React, { FC, memo, useMemo, useRef } from 'react'
+import React, { FC, memo, useCallback, useEffect, useMemo, useRef } from 'react'
 import { useState } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 import { IProduct } from '../../types/ICatalog'
@@ -14,9 +14,10 @@ import MyPagination from '../UI/MyPagination/MyPagination'
 interface ICatalogOutputArea {
     activeGoodsList: IProduct[]
     loading: boolean
+    openMenu: boolean
 }
 
-const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loading}) => {
+const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loading, openMenu}) => {
     const nodeRef = useRef(null)
     const params = useParams()
     const [page, setPage] = useState<number>(1)
@@ -24,7 +25,7 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loadin
 
     let goodsServiseList = useMemo(() => {
         setPage(1)
-        let newArr = new ActiveGoodsService(activeGoodsList, sortType, page)
+        let newArr = new ActiveGoodsService(activeGoodsList, sortType, page, openMenu)
         return newArr
     }, [activeGoodsList])
 
@@ -34,16 +35,20 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loadin
     }, [sortType, goodsServiseList.id])
 
     let visibleItemsArr = useMemo(() => {
-        goodsServiseList.changeActiveGoods(page)
+        goodsServiseList.changeActiveGoods(page, openMenu)
         return goodsServiseList.activeGoodsArr
-    }, [page, sortedList, sortType])
+    }, [page, sortedList, sortType, openMenu])
 
     let pages = Math.ceil(sortedList.length/goodsServiseList.itemsOnPage)
 
-    function changePage(activePage: number) {
+    useEffect(() => {
+        if(pages < page) setPage(pages)
+    }, [openMenu])
+
+    const changePage = useCallback((activePage: number) => {
         setPage(activePage)
         window.scrollTo(0, 0)
-    }
+    }, [])
 
     if(params.id) {
         return (
