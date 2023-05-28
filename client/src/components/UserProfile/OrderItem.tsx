@@ -20,7 +20,7 @@ const OrderItem: FC<IOrderItem> = ({order}) => {
                 {
                     order.productsArr.map((product) => {
                         return (
-                            <OrderProduct product={product}></OrderProduct>
+                            <OrderProduct product={product} key={product._id}></OrderProduct>
                         )
                     })
                 }
