@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from 'react'
 import { Link } from 'react-router-dom'
-import LoginModal from './LoginModal'
+import LoginModal from './Authorization/LoginModal'
 import MyModal from './UI/MyModal/MyModal'
 import logo from '../assets//img/logo.png'
 import basket from '../assets/img/basket.png'
@@ -12,15 +12,15 @@ import { RootState } from '../redux/store'
 import { logout } from '../redux/slices/auth'
 
 const Header = memo(() => {
-    const isAuthenticated = useSelector((state: RootState) => state.authSlice.isAuthenticated)
+    const isAuthorizated = useSelector((state: RootState) => state.authSlice.isAuthorizated)
     const basketCount = useSelector((state: RootState)  => state.basketSlice.basketCount)
     const dispatch = useDispatch()
 
     const [visible, setVisible] = useState(false)
 
     useEffect(() => {
-        if(isAuthenticated) setVisible(false)
-    }, [isAuthenticated])
+        if(isAuthorizated) setVisible(false)
+    }, [isAuthorizated])
 
     return (
         <div className='header'>
@@ -31,11 +31,14 @@ const Header = memo(() => {
                 <ContactInfo/>
                 <div className='header__right'>
                     <div className='header__top'>
+                        {isAuthorizated &&
+                            <Link className='header__top-links' to="/profile">Профиль</Link>
+                        }
                         <Link className='header__top-links' to="/rules">Правила</Link>
                         <Link className='header__top-links' to="/contacts">Контакты</Link>
                     </div>
                     <div className='header__rigth-middle'>
-                        {isAuthenticated
+                        {isAuthorizated
                             ?
                             <div className='header__rigth-middle-login' onClick={() => dispatch(logout())}>
                                 <img className='header__rigth-middle-login-img' src={login} alt="login"></img>
@@ -58,7 +61,7 @@ const Header = memo(() => {
                 </div>
             </div>
 
-            {(!isAuthenticated  && 
+            {(!isAuthorizated  && 
             <CSSTransition in={visible} classNames='modal-area' timeout={300} unmountOnExit>
                 <MyModal setVisible={setVisible}>
                     <LoginModal></LoginModal>

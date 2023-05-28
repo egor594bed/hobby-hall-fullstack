@@ -20,6 +20,10 @@ export const useHttp = () => {
             if (!response.ok) {
                 throw new Error(data.message || 'Что-то пошло не так')
             }
+
+            if(data.message) {
+                dispatch(addToast({id: Date.now(), message: data.message, type: 'success'}))
+            }
             
             setLoading(false)
             return data

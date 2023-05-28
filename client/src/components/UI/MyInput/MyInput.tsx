@@ -1,31 +1,39 @@
 
 import React, { FC, memo } from 'react'
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
+import MyFormError from '../MyErrors/MyFormError/MyFormError'
 import classes from './MyInput.module.scss'
 
-interface MyInputProps {
-  name?:string
-  placeholder?: string
-  type: string
-  accept?: string
-  value?: string
-  onChange?: (value: string) => void
-  id?: string
+interface IMyInput {
+    name: string
+    label: string
+    errors: FieldErrors<FieldValues>
+    register: UseFormRegister<FieldValues>
+    validationSchema?: any
+    placeholder?: string
+    type?: string
+    // onChange={}
 }
 
-
-const MyInput: FC<MyInputProps> = memo(({onChange, ...props}) => {
+const MyInput: FC<IMyInput> = memo(({name, label, errors, register, validationSchema, placeholder, type}) => {
 
     return (
-        <input 
+        <>
+        <div className={classes.MyInputWrapper}>
+            <p className={classes.MyInputLabel}>
+                {label}
+            </p>
+            <input 
             className={classes.MyInput}
-            onChange={e =>  {
-                if (onChange !== undefined) {
-                    onChange(e.target.value)} 
-                }
-            }
-            {...props} 
-            required>
-        </input>
+            placeholder={placeholder}
+            type={type}
+            {...register(name, validationSchema || {})}
+            >
+            </input>
+        </div>
+
+        <MyFormError error={errors?.[name]}></MyFormError>
+        </>
     )
 })
 

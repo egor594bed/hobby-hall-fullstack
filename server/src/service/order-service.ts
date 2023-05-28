@@ -6,33 +6,44 @@ interface IOrder {
     userId: string
     basketArr: IProduct[]
     comment: string
-    data: string
+    date: string
     delivery: string
     payment: string
-    state: string
+    status: string
 }
 
 interface IAdminUpdateOrder {
     orderId: string
-    state: string
+    status: string
     orderComment: string
 }
 
 class OrderService {
+    async getUserOrders(id: string) {
+        const userOrders = await Order.find({userId: id})
+
+        return userOrders
+    }
+
     async newOrder(body: IOrder) {
-        const {userId, basketArr, comment, data, delivery, payment, state} = body
+        const {userId, basketArr, comment, date, delivery, payment, status} = body
         const user = await User.findOne({_id: userId})
-        user!.password = ""
+
+        if(!user) {
+            throw new Error('Перезайдите в систему')
+        }
+
+        user.password = ""
 
         //deliveryId и paymentId заменить на название, когда добавлю их в базу???
         const newOrderBody = {
-            user: user,
+            userId: user._id,
             productsArr: basketArr,
             clientComment: comment,
-            data: data,
+            date: date,
             deliveryId: delivery,
             paymentId: payment,
-            state: state
+            status: status
         }
 
         const newOrder = new Order(newOrderBody)
@@ -40,10 +51,10 @@ class OrderService {
     }
 
     async adminUpdateOrder(body: IAdminUpdateOrder) {
-        const {orderId, state, orderComment} = body
+        const {orderId, status, orderComment} = body
 
         await Order.findOneAndUpdate({_id: orderId}, {
-            state: state,
+            status: status,
             comment: orderComment
         })
     }

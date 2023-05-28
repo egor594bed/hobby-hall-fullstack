@@ -9,6 +9,7 @@ import { checkAuth } from "./redux/slices/auth";
 import {ThunkDispatch} from "@reduxjs/toolkit";
 import UnderConstruction from "./components/UnderConstruction";
 import NotFound from "./components/NotFound";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
@@ -27,6 +28,7 @@ function App() {
                 <Route path="product/:id" element={<CatalogDetailingItem/>}></Route>
             </Route>
             <Route path="basket" element={<Basket/>}></Route>
+            <Route path="profile" element={<UserProfile/>}></Route>
             <Route path="rules" element={<UnderConstruction/>}></Route>
             <Route path="contacts" element={<UnderConstruction/>}></Route>
             <Route path="*" element={<NotFound/>}></Route>

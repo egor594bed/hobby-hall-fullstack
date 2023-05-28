@@ -35,13 +35,19 @@ class TokenService {
     }
 
     verifyAccessToken(token: token) {
-        const isValidate = jwt.verify(token, config.get<string>("jwtAccess"))
+        let isValidate
+        jwt.verify(token, config.get<string>("jwtAccess"), (error) => {
+            isValidate = (error)? false : true
+        })
 
         return isValidate
     }
 
     verifyRefreshToken(token: token) {
-        const isValidate = jwt.verify(token, config.get<string>("jwtAccess"))
+        let isValidate
+        jwt.verify(token, config.get<string>("jwtAccess"), (error) => {
+            isValidate = (error)? false : true
+        })
 
         return isValidate
     }
@@ -57,7 +63,7 @@ class TokenService {
         if(accessTokenValid) {
             return {
                 userId: userId,
-                token: tokens.accessToken
+                token: tokens.accessToken,
             }
         }else {
             const inDb = await this.findToken(tokens.refreshToken)

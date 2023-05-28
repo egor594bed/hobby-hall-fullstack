@@ -1074,6 +1074,158 @@ ul,ol,li {
   font-style: italic;
 }
 
+//Profile
+
+.profile {
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  flex-grow: 1;
+  display: flex;
+}
+
+.profile__menu {
+  width: 20%;
+  padding: 5px;
+  margin-right: 10px;
+  border: 1px solid $second-color;
+  border-radius: 10px;
+}
+
+.profile__menu-item {
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 10px;
+  border: 1px solid $first-color;
+  border-radius: 10px;
+  color: $second-color;
+  font-weight: 600;
+  text-align: center;
+  background-color: white;
+  cursor: pointer;
+
+  transition: background-color .3s;
+
+
+  &.profile__menu-item-active,
+  &:hover {
+    background-color: $first-color;
+  }
+} 
+
+.profile__output-title {
+  margin-bottom: 40px;
+  text-align: center;
+  color: $second-color
+}
+
+.profile__output {
+  width: calc(80% - 10px);
+  padding: 10px;
+  border: 1px solid $second-color;
+  border-radius: 10px;
+}
+
+.profile__user-profile {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile__form {
+  width: 48%;
+}
+
+.profile__form-title {
+  margin-bottom: 20px;
+  text-align: center;
+  color: $second-color;
+}
+
+//ProfileOrders
+
+.order {
+  margin-bottom: 10px;
+  border: 1px solid $second-color;
+  border-radius: 10px;
+  color: $second-color;
+  cursor: pointer;
+  overflow: hidden;
+
+  &:last-of-type {
+    margin: 0;
+  }
+}
+
+.order__header {
+  padding: 10px 20px;
+  background-color: $first-color;
+  border-bottom: 1px solid $second-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order__header-id {
+}
+
+.order__header-status {
+  padding: 5px 10px;
+  border-radius: 10px;
+  &.order__header-status-new {
+    background-color: yellow;
+  }
+
+  &.order__header-status-work {
+    background-color: greenyellow;
+  }
+
+  &.order__header-status-cancelled {
+    background-color: red;
+  }
+
+  &.order__header-status-done {
+    color: $first-color;
+    background-color: green;
+  }
+}
+
+.order__body {
+  max-height: 0;
+  padding: 0 20px;
+  overflow: hidden;
+  transition: max-height .3s, padding .3s;
+  &.order__body-open {
+    padding: 20px;
+    max-height: max-content;
+  }
+}
+
+.order__product {
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 1px solid $second-color;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order__body-client-comment {
+}
+
+.order__body-client-comment-text {
+}
+
+.order__footer {
+  padding: 5px 20px 10px;
+  background-color: $first-color;
+  border-top: 1px solid $second-color;
+  text-align: end;
+}
+
+.order__footer-data {
+}
+
 // Footer
 
 .footer {

@@ -8,16 +8,15 @@ import { useCallback } from 'react'
 import MyButton from '../components/UI/MyButton/MyButton'
 import { IProduct } from '../types/ICatalog'
 import { Link } from 'react-router-dom'
-import LoginForm from '../components/LoginForm'
-import RegisterForm from '../components/RegisterForm'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { removeProduct, removeAllFromBasket } from '../redux/slices/basket'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 import BasketForm from '../components/Basket/BasketForm'
+import AuthorizationWindow from '../components/Authorization/AuthorizationWindow'
 
 const Basket = () => {
-    const isAuthenticated = useSelector((state: RootState) => state.authSlice.isAuthenticated)
+    const isAuthorizated = useSelector((state: RootState) => state.authSlice.isAuthorizated)
     const {request, loading} = useHttp()
     const [updateTotal, setUpdateTotal] = useState(false)
     const [disableButton, setDisableButton] = useState<boolean>(true)
@@ -152,21 +151,11 @@ const Basket = () => {
                         </div>  
                 }
             </div>
-            {isAuthenticated
+            {isAuthorizated
                 ?
                 <BasketForm disableButton={disableButton} setBasketArr={setBasketArr} basketArr={basketArr}/>
                 :
-                <div className='basket__auth'>
-                    <p className='basket__auth-title'>Для оформления заказа необходимо войти в систему!</p>
-                    <div className='basket__auth-wrapper'>
-                        <div className='basket__auth-borders'>
-                            <LoginForm></LoginForm>
-                        </div>
-                        <div className='basket__auth-borders'>
-                            <RegisterForm></RegisterForm>
-                        </div>
-                    </div>
-                </div>         
+                <AuthorizationWindow title='Для оформления заказа необходимо войти в систему!'/>     
             }
         </div>
     )

@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 interface IAuthSlice {
-    isAuthenticated: boolean
+    isAuthorizated: boolean
     userId: string | null
 }
 const storageName = 'userData'
 
 const initialState: IAuthSlice = {
-    isAuthenticated: false,
+    isAuthorizated: false,
     userId: null
 }
 
@@ -44,12 +44,12 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         login: (state, data) => {
-            state.isAuthenticated = true
+            state.isAuthorizated = true
             state.userId = data.payload.userId
             localStorage.setItem(storageName, JSON.stringify({userId: data.payload.userId, token: data.payload.token}))
         },
         logout: (state) => {
-            state.isAuthenticated = false
+            state.isAuthorizated = false
             state.userId = null
             localStorage.removeItem(storageName)
         },
@@ -58,12 +58,12 @@ export const authSlice = createSlice({
         builder.addCase(checkAuth.fulfilled, (state, action) => {
             localStorage.removeItem(storageName)
             if(action.payload == null) {
-                state.isAuthenticated = false
+                state.isAuthorizated = false
                 state.userId = null
                 return
             }
             localStorage.setItem(storageName, JSON.stringify({userId: action.payload.userId, token: action.payload.token}))
-            state.isAuthenticated = true
+            state.isAuthorizated = true
             state.userId = action.payload.userId
         })
     }

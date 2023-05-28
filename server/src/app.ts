@@ -14,6 +14,7 @@ app.use(cors())
 app.use('/api/auth', require("./routes/auth.routes"));
 app.use('/api/catalog', require("./routes/catalog.routes"));
 app.use('/api/order', require("./routes/order.routes"));
+app.use('/api/user', require("./routes/user.routes"));
 app.use('/server/assets/goodsImgs', express.static(path.join(__dirname, '../assets/goodsImgs')));
 
 if (process.env.NODE_ENV === 'production') {

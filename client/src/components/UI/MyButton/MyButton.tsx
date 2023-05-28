@@ -3,7 +3,7 @@ import classes from './MyButton.module.scss'
 
 interface IMyButton {
     onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-    children?: ReactNode
+    children: ReactNode
     disabled?: boolean
     style?: Object
 }

@@ -49,7 +49,7 @@ const BasketForm: FC<IBasketForm> = ({disableButton, setBasketArr, basketArr}) =
         const userData = localStorage.getItem('userData') as string
         const userId = JSON.parse(userData).userId
 
-        const data = () => {
+        const date = () => {
             const locale = 'ru-ru';
             const d = new Date();
             
@@ -64,8 +64,8 @@ const BasketForm: FC<IBasketForm> = ({disableButton, setBasketArr, basketArr}) =
 
         delete orderData.checkbox
         orderData.userId = userId
-        orderData.data = data()
-        orderData.state = 'Новый'
+        orderData.date = date()
+        orderData.status = 'Новый'
         orderData.basketArr = basketArr
 
         request('api/order/newOrder', 'POST', {...orderData})
