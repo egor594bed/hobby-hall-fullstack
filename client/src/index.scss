@@ -337,7 +337,7 @@ ul,ol,li {
   width: 100%;
   height: auto;
   margin-bottom: 30px;
-  min-height: 600px;
+  min-height: 50vh;
   padding: 30px 30px 50px;
   background-color: white;
   border-radius: 10px;
@@ -407,10 +407,10 @@ ul,ol,li {
 }
 
 .catalog__outputArea-items {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
+  column-gap: 5px;
+  row-gap: 5px;
 }
 
 .catalog__item {
@@ -734,7 +734,7 @@ ul,ol,li {
 }
 
 .basket__auth-borders {
-  width: 30%;
+  width: 40%;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -1132,6 +1132,7 @@ ul,ol,li {
 }
 
 .profile__form {
+  margin-bottom: 20px;
   width: 48%;
 }
 

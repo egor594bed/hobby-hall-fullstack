@@ -51,6 +51,7 @@ const RegisterForm = memo(() => {
                     message: 'Минимальное количество символов: 6'
                 }
             }}
+            type='password'
             />
             <MyInput
             name='name'
