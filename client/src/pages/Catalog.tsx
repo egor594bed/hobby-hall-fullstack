@@ -10,18 +10,18 @@ const Catalog = () => {
     const [openMenu, setOpenMenu] = useState(true)
 
     const {loading, request} = useHttp()
-    const [activeGoodsList, setActiveGoodsList] = useState<IProduct[] | []>([])
+    const [goodsList, setGoodsList] = useState<IProduct[] | []>([])
     const searchDelay = useRef<NodeJS.Timeout | null>(null)
     const params = useParams()
     const navigate = useNavigate()
 
     const getGoodsId = useCallback((id: string) => {
-        setActiveGoodsList([])
+        setGoodsList([])
         if(params.id) navigate(-1)
         async function getGoods() {
             request(`/api/catalog/getGoodsFromId?id=${id}`)
             .then(res => {
-                setActiveGoodsList([...res.goodsArr])
+                setGoodsList([...res.goodsArr])
             })
         }
         getGoods()
@@ -29,7 +29,7 @@ const Catalog = () => {
 
     const getSearchedProducts = useCallback((value: string) => {
         if (value.length == 0) {
-            setActiveGoodsList([])
+            setGoodsList([])
             if (searchDelay.current) clearTimeout(searchDelay.current)
         }else {
             if (value.length < 3) return
@@ -38,7 +38,7 @@ const Catalog = () => {
                 if (params.id) navigate(-1)
                 request(`/api/catalog/getGoodsFromSearch?search=${value}`)
                 .then(res => {
-                    setActiveGoodsList([...res.goodsArr])
+                    setGoodsList([...res.goodsArr])
                 })
             }, 1000)
         }
@@ -55,7 +55,7 @@ const Catalog = () => {
             </div>
             <div className='catalog__middle'>
                 <CatalogCategories getGoodsId={getGoodsId} visible={openMenu}></CatalogCategories>
-                <CatalogOutputArea activeGoodsList={activeGoodsList} openMenu={openMenu} loading={loading}></CatalogOutputArea>
+                <CatalogOutputArea goodsList={goodsList} openMenu={openMenu} loading={loading}></CatalogOutputArea>
             </div>
         </div>
     )

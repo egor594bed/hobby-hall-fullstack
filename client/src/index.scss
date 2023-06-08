@@ -153,6 +153,7 @@ ul,ol,li {
   font-size: 14px;
   background-color: $first-color;
   border: 1px solid $second-color;
+  color: $second-color;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -652,7 +653,8 @@ ul,ol,li {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-
+  position: relative;
+  overflow: hidden;
 }
 
 .catalog__detail-top-side-title {

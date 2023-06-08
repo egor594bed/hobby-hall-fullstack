@@ -3,20 +3,19 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useHttp } from '../../hooks/http.hook'
-import { toBasket } from '../../utils/toBasket'
+import { IProduct } from '../../types/ICatalog'
+import { useFavorite } from '../../hooks/favorite.hook'
+import { useBasket } from '../../hooks/basket.hook'
 import Loader from '../Loader/Loader'
 import MyButton from '../UI/MyButton/MyButton'
-import { IProduct } from '../../types/ICatalog'
-import { useDispatch } from 'react-redux'
-import { addToast } from '../../redux/slices/toasts'
-import { addProduct, removeProduct } from '../../redux/slices/basket'
+import MyFavorite from '../UI/MyFavorite/MyFavorite'
 
 const CatalogDetailingItem = () => {
     const params = useParams()
     const [product, setProduct] = useState<IProduct | null>(null)
-    const [onBasket, setOnBasket] = useState(false)
+    const {isFavorite, favoriteHandler} = useFavorite(product?._id, product?.name)
+    const {inBasket, basketHandler} = useBasket(product?._id, product?.name)
     const {request} = useHttp()
-    const dispatch = useDispatch()
     function noop() {}
 
     useEffect(() => {
@@ -26,35 +25,6 @@ const CatalogDetailingItem = () => {
         }
         getProduct()
     }, [params.id, request])
-
-    function addToBasket(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-        let target = e.target as HTMLDataElement
-        if (typeof(target.dataset.id) === 'string') {
-            toBasket(target.dataset.id)
-            setOnBasket(!onBasket)
-            if(!onBasket) {
-                dispatch(addProduct())
-                dispatch(addToast({id: Date.now(), message: `Товар "${product!.name}" добвален в корзину`, type: 'info'}))
-            }else {
-                dispatch(removeProduct())
-                dispatch(addToast({id: Date.now(), message: `Товар "${product!.name}" удален из корзины`, type: 'info'}))
-            }
-        }
-    }
-
-    useEffect(() => {
-        if(localStorage.getItem('basket') && product !== null) { 
-            let basketStr = localStorage.getItem('basket') as string
-            let basketArr = JSON.parse(basketStr)
-    
-            for (let i = 0; i < basketArr.length; i++) {
-                if(basketArr[i][0] === product._id) {
-                    setOnBasket(true)
-                    break
-                }
-            }
-        }
-    }, [product])
 
     if(product === null) {
         return <Loader></Loader>
@@ -70,6 +40,7 @@ const CatalogDetailingItem = () => {
                 <div className='catalog__detail-top-side'>
                     <p className='catalog__detail-top-side-title'>{product.name}</p>
                     <p className='catalog__detail-top-side-article'>{product.article}</p>
+                    <MyFavorite isFavorite={isFavorite} favoriteHandler={favoriteHandler}></MyFavorite>
                     <div className='catalog__detail-top-side-wrapper'>
                         <p className='catalog__detail-top-side-price'>{product.price} р.</p>
                         {product.quantity < 1
@@ -77,12 +48,10 @@ const CatalogDetailingItem = () => {
                             <MyButton disabled>{'Нет в наличии'}</MyButton>
                             :
                             <MyButton
-                            data-id={product._id}
-                            onClick={addToBasket}
+                            onClick={basketHandler}
                             style={{width: '60%'}}
-                            >{(onBasket) ? 'Удалить' : 'Добавить в корзину'}</MyButton>
+                            >{(inBasket) ? 'Удалить' : 'Добавить в корзину'}</MyButton>
                         }
-
                     </div>
                     <Link to='../../basket'><MyButton
                     onClick={noop}

@@ -7,46 +7,41 @@ import CatalogItem from './CatalogItem'
 import CatalogPromoSlider from './CatalogPromoSlider'
 import CatalogRecommendedSlider from './CatalogRecommendedSlider'
 import { CSSTransition } from 'react-transition-group'
-import { ActiveGoodsService } from '../../service/active-goods-service'
-import CatalogSort from './CatalogSort'
+import CatalogSortList from './CatalogSortList'
 import MyPagination from '../UI/MyPagination/MyPagination'
+import { usePagination } from '../../hooks/pagination.hook'
+import CatalogSortService from '../../service/sort/catalog-sort-service'
+import SortTypes from '../../types/SortTypes'
 
 interface ICatalogOutputArea {
-    activeGoodsList: IProduct[]
+    goodsList: IProduct[]
     loading: boolean
     openMenu: boolean
 }
 
-const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loading, openMenu}) => {
+const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({goodsList, loading, openMenu}) => {
     const nodeRef = useRef(null)
     const params = useParams()
-    const [page, setPage] = useState<number>(1)
-    const [sortType, setSortType] = useState<'stock' | 'price' | 'alphabet'>('stock')
-
-    let goodsServiseList = useMemo(() => {
-        setPage(1)
-        let newArr = new ActiveGoodsService(activeGoodsList, sortType, page, openMenu)
-        return newArr
-    }, [activeGoodsList])
-
-    let sortedList = useMemo(() => {
-        goodsServiseList.sortGoods(sortType)
-        return goodsServiseList.goodsArr
-    }, [sortType, goodsServiseList.id])
-
-    let visibleItemsArr = useMemo(() => {
-        goodsServiseList.changeActiveGoods(page, openMenu)
-        return goodsServiseList.activeGoodsArr
-    }, [page, sortedList, sortType, openMenu])
-
-    let pages = Math.ceil(sortedList.length/goodsServiseList.itemsOnPage)
+    const [sortType, setSortType] = useState<SortTypes>('stock')
+    const {setProductsOnPage, setAllProducts, setActivePage, activePage, pages, activeProducts, allProducts} = usePagination()
 
     useEffect(() => {
-        if(pages < page) setPage(pages)
+        setAllProducts(goodsList)
+    }, [goodsList])
+
+    const sortHandler = useCallback((method: SortTypes) => {
+        if(!allProducts) return
+        const sortedGoods = CatalogSortService.sortGoods(allProducts, method)
+        setSortType(method)
+        setAllProducts([...sortedGoods])
+    }, [sortType, allProducts])
+
+    useEffect(() => {
+        (openMenu) ? setProductsOnPage(12) : setProductsOnPage(15)
     }, [openMenu])
 
     const changePage = useCallback((activePage: number) => {
-        setPage(activePage)
+        setActivePage(activePage)
         window.scrollTo(0, 0)
     }, [])
 
@@ -63,23 +58,23 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = memo(({activeGoodsList, loadin
 
     return (
         <div className='catalog__outputArea-wrapper'>
-            <div className='catalog__outputArea' style={(activeGoodsList[0]) ? {} : {padding: 0, overflow: 'hidden'}}>
+            <div className='catalog__outputArea' style={(goodsList[0]) ? {} : {padding: 0, overflow: 'hidden'}}>
                 {loading &&
                     <Loader></Loader>
                 }
                 <CSSTransition in={!loading} timeout={300} classNames={'hide-out'} nodeRef={nodeRef}>
-                    {(activeGoodsList[0] && !loading)
+                    {(allProducts[0] && !loading)
                         ?
                         <>
-                        <CatalogSort sortType={sortType} setSortType={setSortType}/>
+                        <CatalogSortList sortType={sortType} setSortType={sortHandler}/>
                         <div className='catalog__outputArea-items' ref={nodeRef}>
-                            {visibleItemsArr.map((elem) => (
+                            {activeProducts.map((elem) => (
                                 <CatalogItem {...elem} key={elem._id}></CatalogItem>
                             ))}
                         </div>
                         {pages > 1 &&
                         <div className='catalog__outputArea-pagination'>
-                            <MyPagination activePage={page} setActivePage={changePage} pages={pages}></MyPagination>
+                            <MyPagination activePage={activePage} setActivePage={changePage} pages={pages}></MyPagination>
                         </div>
                         }
                         </>

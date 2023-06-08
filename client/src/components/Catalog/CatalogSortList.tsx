@@ -1,11 +1,12 @@
 import React, { FC, memo } from 'react'
+import SortTypes from '../../types/SortTypes'
 
-interface ICatalogSort {
+interface ICatalogSortList {
     sortType: 'stock' | 'price' | 'alphabet'
-    setSortType: React.Dispatch<React.SetStateAction<"stock" | "price" | "alphabet">>
+    setSortType(method: SortTypes): void 
 }
 
-const CatalogSort: FC<ICatalogSort> = memo(({sortType, setSortType}) => {
+const CatalogSortList: FC<ICatalogSortList> = memo(({sortType, setSortType}) => {
 
 
     return (
@@ -35,5 +36,5 @@ const CatalogSort: FC<ICatalogSort> = memo(({sortType, setSortType}) => {
     )
 })
 
-export default CatalogSort
+export default CatalogSortList
 

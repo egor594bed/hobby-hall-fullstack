@@ -16,7 +16,7 @@ class FavoriteService {
 
     isFavorite(id: string) {
         let favoritsArr =  this.getFavoriteIds()
-
+        if(!favoritsArr) return false
         return (favoritsArr.includes(id)) ? true : false
     }
 

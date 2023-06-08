@@ -33,7 +33,8 @@ async function start() {
         mongoose.set('strictQuery', false);
         await mongoose.connect(uri, {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            family: 4
         } as mongoose.ConnectOptions)
         app.listen(PORT, () => console.log(`App has been started on port ${PORT}`));
     } catch (e: any) {
