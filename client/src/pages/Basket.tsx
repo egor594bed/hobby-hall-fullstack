@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import BasketItem from '../components/Basket/BasketItem'
 import { useHttp } from '../hooks/http.hook'
-import { toBasket } from '../utils/toBasket'
 import Loader from '../components/Loader/Loader'
 import { useCallback } from 'react'
 import MyButton from '../components/UI/MyButton/MyButton'
@@ -14,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 import BasketForm from '../components/Basket/BasketForm'
 import AuthorizationWindow from '../components/Authorization/AuthorizationWindow'
+import BasketService from '../service/basket-service'
 
 const Basket = () => {
     const isAuthorizated = useSelector((state: RootState) => state.authSlice.isAuthorizated)
@@ -26,16 +26,15 @@ const Basket = () => {
 
 
     useEffect(() => {
-        const basketStr = localStorage.getItem('basket') as string
-        const basketArr = JSON.parse(basketStr)
+        const storageBasketArr = BasketService.getBasketItems()
 
-        request('api/catalog/getBasketGoods', 'POST', basketArr)
+        request('api/catalog/getBasketGoods', 'POST', storageBasketArr)
         .then(data => {
             for (let i = 0; i < data.basketArr.length; i++) {
                 const dataElem = data.basketArr[i]
                 for (let j = 0; j < basketArr.length; j++) {
-                    if(dataElem._id == basketArr[j][0]) {
-                        dataElem.total = basketArr[j][1]
+                    if(dataElem._id == storageBasketArr[j][0]) {
+                        dataElem.total = storageBasketArr[j][1]
                     }
                 }
             }
@@ -59,32 +58,21 @@ const Basket = () => {
     }, [])
 
     const changeTotal = useCallback((id: string, counter: number) => {
-        const storageBasketStr = localStorage.getItem('basket') as string
-        const storageBasketArr = JSON.parse(storageBasketStr)
-
-        for (let i = 0; i < storageBasketArr.length; i++) {
-            if (storageBasketArr[i][0] === id) {
-                storageBasketArr[i][1] = counter
-                break
-            }
-            
-        }
-
-        localStorage.setItem('basket', JSON.stringify(storageBasketArr))
+        BasketService.changeBasketItemTotal(id, counter)
 
         for (let i = 0; i < basketArr.length; i++) {
             if (basketArr[i]._id === id) {
                 basketArr[i].total = counter
             }
         }
+
         setBasketArr(basketArr)
         setUpdateTotal(true)
-
     }, [basketArr])
 
     //Удаление продукта из локалстареджа
     const deleteProductFromBasket = useCallback((id: string) => {
-        toBasket(id)
+        BasketService.toggleBasketItem(id)
         const newBasket = basketArr.filter((elem) => {
             if(elem._id !== id) return true
         })

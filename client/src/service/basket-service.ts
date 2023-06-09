@@ -2,8 +2,12 @@ const storageName = 'basket'
 
 class BasketService {
 
-    toggleBasketItem(id: string) {
+    getBasketItems() {
         if(!localStorage.getItem(storageName)) localStorage.setItem(storageName, '[]')
+        return JSON.parse(localStorage.getItem(storageName) as string)
+    }
+    
+    toggleBasketItem(id: string) {
         let basketArr =  this.getBasketItems()
 
         for(let i = 0; i < basketArr.length; i++) {
@@ -25,6 +29,18 @@ class BasketService {
         return false
     }
 
+    changeBasketItemTotal(id: string, total: number) {
+        const basketArr = this.getBasketItems()
+
+        for(let i = 0; i < basketArr.length; i++) {
+            if(basketArr[i][0] === id) {
+                basketArr[i][1] = total
+            }
+        }
+
+        this.saveBasketItems(basketArr)
+    }
+
     private removeBasketItem(id: string) {
         let basketArr =  this.getBasketItems()
 
@@ -41,10 +57,6 @@ class BasketService {
 
         basketArr.push([id, 1])
         this.saveBasketItems(basketArr)
-    }
-
-    private getBasketItems() {
-        return JSON.parse(localStorage.getItem(storageName) as string)
     }
 
     private saveBasketItems(newBasketArr: [string[]]) {
