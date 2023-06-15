@@ -1,9 +1,9 @@
 import {Schema, model} from 'mongoose'
-import SubCategories from './SubCategories'
 
 const schema = new Schema ({
     name: {type: String, required: true},
-    subCategories: {type: Array}
+    subCategories: {type: Array},
+    imgSrc: {type: String, required: true}
 })
 
 export default model('Categories', schema)

@@ -7,8 +7,8 @@ export interface ISubCategories {
 export interface ICatalog {
     _id: string
     name: string
-    subCategories: ISubCategories[]
     imgSrc: string
+    subCategories: ISubCategories[]
 }
 
 export interface IProduct {

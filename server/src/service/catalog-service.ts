@@ -14,6 +14,7 @@ class CatalogService {
             marge.push({
                 _id: String(elem._id),
                 name: elem.name,
+                imgSrc: elem.imgSrc,
                 subCategories: arr
             })
         })
