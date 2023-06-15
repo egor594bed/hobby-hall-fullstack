@@ -1,12 +1,14 @@
 export interface ISubCategories {
     name: string
     categoryId: string;
+    imgSrc: string
 }
 
 export interface ICatalog {
     _id: string
     name: string
     subCategories: ISubCategories[]
+    imgSrc: string
 }
 
 export interface IProduct {

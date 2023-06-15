@@ -2,12 +2,14 @@ export interface ICategory {
     _id: string
     name: string
     subCategories: ISubCategory[]
+    imgSrc: string
 }
 
 export interface ISubCategory {
     _id: string
     name: string
     categoryId: string
+    imgSrc: string
 }
 
 export interface IProduct {
