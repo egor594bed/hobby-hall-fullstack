@@ -16,6 +16,7 @@ app.use('/api/catalog', require("./routes/catalog.routes"));
 app.use('/api/order', require("./routes/order.routes"));
 app.use('/api/user', require("./routes/user.routes"));
 app.use('/server/assets/goodsImgs', express.static(path.join(__dirname, '../assets/goodsImgs')));
+app.use('/server/assets/catalogImgs', express.static(path.join(__dirname, '../assets/catalogImgs')));
 
 if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, '../../client', 'build')))
