@@ -1,69 +1,73 @@
-import { IProduct } from "../types/ICatalog"
-import Order from "../models/Order"
-import User from "../models/User"
+import { IProduct } from "../types/ICatalog";
+import Order from "../models/Order";
+import User from "../models/User";
 
 interface IOrder {
-    userId: string
-    basketArr: IProduct[]
-    comment: string
-    date: string
-    delivery: string
-    payment: string
-    status: string
+  userId: string;
+  basketArr: IProduct[];
+  comment: string;
+  date: string;
+  delivery: string;
+  payment: string;
+  status: string;
 }
 
 interface IAdminUpdateOrder {
-    orderId: string
-    status: string
-    orderComment: string
+  orderId: string;
+  status: string;
+  orderComment: string;
 }
 
 class OrderService {
-    async getUserOrders(id: string) {
-        const userOrders = await Order.find({userId: id})
+  async getUserOrders(id: string) {
+    const userOrders = await Order.find({ userId: id });
 
-        return userOrders
+    return userOrders;
+  }
+
+  async newOrder(body: IOrder) {
+    const { userId, basketArr, comment, date, delivery, payment, status } =
+      body;
+    const user = await User.findOne({ _id: userId });
+
+    if (!user) {
+      throw new Error("Перезайдите в систему");
     }
 
-    async newOrder(body: IOrder) {
-        const {userId, basketArr, comment, date, delivery, payment, status} = body
-        const user = await User.findOne({_id: userId})
+    user.password = "";
 
-        if(!user) {
-            throw new Error('Перезайдите в систему')
-        }
+    //deliveryId и paymentId заменить на название, когда добавлю их в базу???
+    const newOrderBody = {
+      userId: user._id,
+      productsArr: basketArr,
+      clientComment: comment,
+      date: date,
+      deliveryId: delivery,
+      paymentId: payment,
+      status: status,
+    };
 
-        user.password = ""
+    const newOrder = new Order(newOrderBody);
+    await newOrder.save();
+  }
 
-        //deliveryId и paymentId заменить на название, когда добавлю их в базу???
-        const newOrderBody = {
-            userId: user._id,
-            productsArr: basketArr,
-            clientComment: comment,
-            date: date,
-            deliveryId: delivery,
-            paymentId: payment,
-            status: status
-        }
+  async adminUpdateOrder(body: IAdminUpdateOrder) {
+    const { orderId, status, orderComment } = body;
 
-        const newOrder = new Order(newOrderBody)
-        await newOrder.save()
-    }
+    await Order.findOneAndUpdate(
+      { _id: orderId },
+      {
+        status: status,
+        comment: orderComment,
+      }
+    );
+  }
 
-    async adminUpdateOrder(body: IAdminUpdateOrder) {
-        const {orderId, status, orderComment} = body
+  async getOrderList() {
+    const orederList = await Order.find().lean();
 
-        await Order.findOneAndUpdate({_id: orderId}, {
-            status: status,
-            comment: orderComment
-        })
-    }
-
-    async getOrderList() {
-        const orederList = await Order.find().lean()
-
-        return orederList
-    }
+    return orederList;
+  }
 }
 
-export default new OrderService()
+export default new OrderService();

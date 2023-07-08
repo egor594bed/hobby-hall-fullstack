@@ -1,10 +1,10 @@
 export interface IToast {
-    id: number
-    message: string
-    type: string
+  id: number;
+  message: string;
+  type: string;
 }
 
 export interface IToastContext {
-    toastList: IToast[] | []
-    setToast: React.Dispatch<any>
+  toastList: IToast[] | [];
+  setToast: React.Dispatch<any>;
 }

@@ -1,23 +1,24 @@
 .MyButton {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 30px;
-    background-color: #ecdfc9;
-    color: #4b1f07;
-    cursor: pointer;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 30px;
+  background-color: #ecdfc9;
+  color: #4b1f07;
+  cursor: pointer;
 
-    position: relative;
-    z-index: 3;
+  position: relative;
+  z-index: 3;
 
-    transition: background-color .3s, color .3s;
-    &:hover, &:focus, &:active {
-        background-color: #4b1f07;
-        color: #ecdfc9;
-    }
+  transition: background-color 0.3s, color 0.3s;
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: #4b1f07;
+    color: #ecdfc9;
+  }
 
-    &:disabled {
-        background-color: gray;
-        color: black;
-    }
+  &:disabled {
+    background-color: gray;
+    color: black;
+  }
 }
-

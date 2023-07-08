@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState, } from 'react'
+import React, {useCallback, useEffect, useRef, useState, } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import CatalogCategories from '../components/Catalog/CatalogCategories'
 import CatalogOutputArea from '../components/Catalog/CatalogOutputArea'

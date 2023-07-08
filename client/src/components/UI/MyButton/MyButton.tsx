@@ -1,20 +1,19 @@
-import React, { FC, memo, ReactNode } from 'react'
-import classes from './MyButton.module.scss'
+import React, { FC, memo, ReactNode } from "react";
+import classes from "./MyButton.module.scss";
 
 interface IMyButton {
-    onClick?: (e: any) => void
-    children: ReactNode
-    disabled?: boolean
-    style?: Object
+  onClick?: (e: any) => void;
+  children: ReactNode;
+  disabled?: boolean;
+  style?: Object;
 }
 
 const MyButton: FC<IMyButton> = memo((props) => {
+  return (
+    <button className={classes.MyButton} {...props}>
+      {props.children}
+    </button>
+  );
+});
 
-    return (
-        <button className={classes.MyButton}  {...props}>
-            {props.children}
-        </button>
-    )
-})
-
-export default MyButton
+export default MyButton;

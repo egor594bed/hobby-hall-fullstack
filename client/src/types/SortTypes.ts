@@ -1,3 +1,3 @@
-type SortTypes = 'stock' | 'price' | 'alphabet'
+type SortTypes = "stock" | "price" | "alphabet";
 
-export default SortTypes
+export default SortTypes;

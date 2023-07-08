@@ -1,4 +1,4 @@
-@import '../../../assets/scss/variables';
+@import "../../../assets/scss/variables";
 
 .MyInputWrapper {
   width: 100%;
@@ -8,41 +8,41 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  
-  transition: border .2s;
-  
+
+  transition: border 0.2s;
+
   &:focus {
     outline: none;
     border: 1px solid $second-color;
   }
-  
+
   & + .MyInputWrapper {
-      margin-top: 20px;
-    }
+    margin-top: 20px;
+  }
+}
+
+.MyInputLabel {
+  width: 40%;
+  padding: 10px 0;
+  background-color: $first-color;
+  color: $second-color;
+  text-align: center;
+}
+
+.MyInput {
+  width: 60%;
+  padding-left: 30px;
+  padding-right: 10px;
+  border: none;
+  font-size: 16px;
+  color: $second-color;
+
+  &:focus,
+  &:active {
+    outline: none;
   }
 
-  .MyInputLabel {
-    width: 40%;
-    padding: 10px 0;
-    background-color: $first-color;
-    color: $second-color;
-    text-align: center;
+  &::placeholder {
+    opacity: 0.7;
   }
-
-  .MyInput {
-    width: 60%;
-    padding-left: 30px;
-    padding-right: 10px;
-    border: none;
-    font-size: 16px;
-    color: $second-color;
-
-    &:focus,
-    &:active {
-      outline: none;
-    }
-
-    &::placeholder {
-      opacity: 0.7;
-    }
-  }
+}

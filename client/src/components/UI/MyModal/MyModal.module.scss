@@ -1,25 +1,25 @@
 .MyModal {
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
 
 .MyModalWindow {
-    width: 420px;
-    height: auto;
-    padding: 30px;
-    border: none;
-    border-radius: 10px;
-    background-color: white;
-    position: relative;
-    top: 0;
-    left: 0;
-    z-index: 9;
+  width: 420px;
+  height: auto;
+  padding: 30px;
+  border: none;
+  border-radius: 10px;
+  background-color: white;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 9;
 }

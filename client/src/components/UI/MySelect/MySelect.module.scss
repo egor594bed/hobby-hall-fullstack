@@ -1,16 +1,16 @@
 @import "../../../assets/scss/_variables.scss";
 
 .MySelect {
-    padding: 10px 15px;
-    border: none;
-    // border-radius: 20px;
-    background-color: $first-color;
-    color: $second-color;
-    cursor: pointer;
-    font-size: 16px;
-    outline: none;
+  padding: 10px 15px;
+  border: none;
+  // border-radius: 20px;
+  background-color: $first-color;
+  color: $second-color;
+  cursor: pointer;
+  font-size: 16px;
+  outline: none;
 
-    & option {
-        cursor: pointer;
-    }
+  & option {
+    cursor: pointer;
+  }
 }

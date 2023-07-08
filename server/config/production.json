@@ -1,6 +1,6 @@
 {
-    "port": 8080,
-    "jwtAccess": "hobby43",
-    "jwtRefresh": "hobby43",
-    "mongoUri": "mongodb+srv://egor594:egor594@cluster0.ofrgh2i.mongodb.net/hobby-hall?retryWrites=true&w=majority"
+  "port": 8080,
+  "jwtAccess": "hobby43",
+  "jwtRefresh": "hobby43",
+  "mongoUri": "mongodb+srv://egor594:egor594@cluster0.ofrgh2i.mongodb.net/hobby-hall?retryWrites=true&w=majority"
 }

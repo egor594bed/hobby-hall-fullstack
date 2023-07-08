@@ -1,4 +1,4 @@
-declare module '*.scss' {
-    const classNames: Record<string, string>;
-    export default cl;
-  }
+declare module "*.scss" {
+  const classNames: Record<string, string>;
+  export default cl;
+}

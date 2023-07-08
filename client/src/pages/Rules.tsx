@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Rules = () => {
-  return (
-    <div className='rules contaiter'>
-      
-    </div>
-  )
-}
+  return <div className="rules contaiter"></div>;
+};
 
-export default Rules
+export default Rules;

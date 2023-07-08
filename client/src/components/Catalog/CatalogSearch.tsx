@@ -1,22 +1,23 @@
-import React, { FC } from 'react'
-import { memo } from 'react';
+import React, { FC } from "react";
+import { memo } from "react";
 
 interface catalogSearchProps {
-    getSearchedProducts: (e: string) => void
+  getSearchedProducts: (e: string) => void;
 }
 
-const CatalogSearch: FC<catalogSearchProps> = memo(({getSearchedProducts}) => {
-
+const CatalogSearch: FC<catalogSearchProps> = memo(
+  ({ getSearchedProducts }) => {
     return (
-        <div className='catalog__search'>
-            <input
-            className='catalog__search-input'
-            type="text"
-            onChange={(e) => getSearchedProducts(e.target.value)}
-            placeholder="Поиск"
-            />
-        </div>
-    )
-})
+      <div className="catalog__search">
+        <input
+          className="catalog__search-input"
+          type="text"
+          onChange={(e) => getSearchedProducts(e.target.value)}
+          placeholder="Поиск"
+        />
+      </div>
+    );
+  }
+);
 
-export default CatalogSearch
+export default CatalogSearch;
