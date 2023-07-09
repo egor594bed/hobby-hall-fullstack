@@ -17,11 +17,11 @@ const CatalogItem: FC<IProduct> = (productData) => {
   );
 
   return (
-    <Link
-      to={`/catalog/product/${productData._id}`}
-      onClick={() => window.scrollTo(0, 0)}
-    >
-      <div className="catalog__item" id={productData._id}>
+    <div className="catalog__item" id={productData._id}>
+      <Link
+        to={`/catalog/product/${productData._id}`}
+        onClick={() => window.scrollTo(0, 0)}
+      >
         <div className="catalog__item-wrapper">
           <div className="catalog__item-img-wrapper">
             <img
@@ -63,8 +63,8 @@ const CatalogItem: FC<IProduct> = (productData) => {
             )}
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 

@@ -345,7 +345,8 @@ li {
   min-height: 50vh;
   padding: 30px 30px 50px;
   background-color: white;
-  border-radius: 10px;
+  border: $block-border;
+  border-radius: $block-border-radius;
   box-shadow: $box-shadow;
   position: relative;
   z-index: 3;
@@ -414,7 +415,7 @@ li {
 
 .catalog__outputArea-items {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(262px, 1fr));
   column-gap: 5px;
   row-gap: 5px;
 }
@@ -569,7 +570,8 @@ li {
   height: auto;
   padding: 30px 30px 50px;
   background-color: white;
-  border-radius: 10px;
+  border: $block-border;
+  border-radius: $block-border-radius;
   box-shadow: $box-shadow;
 }
 
@@ -698,7 +700,8 @@ li {
   width: 100%;
   padding: 30px 30px 60px 30px;
   border: none;
-  border-radius: 10px;
+  border: $block-border;
+  border-radius: $block-border-radius;
   box-shadow: $box-shadow;
   background-color: white;
   flex-grow: 1;
