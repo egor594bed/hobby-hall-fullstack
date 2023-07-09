@@ -61,4 +61,13 @@ router.post("/getBasketGoods", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/getProduct", async (req: Request, res: Response) => {
+  try {
+    const product = await CatalogService.getProduct(req.query.id as string);
+    return res.status(200).json({ product });
+  } catch (e) {
+    return res.status(500).json({ message: "Что-то пошло не так" });
+  }
+});
+
 module.exports = router;

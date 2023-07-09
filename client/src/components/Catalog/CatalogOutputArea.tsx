@@ -110,7 +110,7 @@ const CatalogOutputArea: FC<ICatalogOutputArea> = memo(
                 )}
               </>
             ) : (
-              <CatalogPromoSlider />
+              <></>
             )}
           </CSSTransition>
         </div>

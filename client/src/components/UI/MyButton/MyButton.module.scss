@@ -1,7 +1,9 @@
+@import "../../../assets/scss/variables";
 .MyButton {
   padding: 10px 15px;
   border: none;
   border-radius: 30px;
+  box-shadow: $box-shadow;
   background-color: #ecdfc9;
   color: #4b1f07;
   cursor: pointer;

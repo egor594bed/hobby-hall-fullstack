@@ -79,6 +79,7 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: $box-shadow;
 }
 
 .header__logo {
@@ -222,6 +223,7 @@ li {
   font-weight: 700;
   background-color: $second-background;
   border-radius: 10px;
+  box-shadow: $box-shadow;
   color: $first-color;
   cursor: pointer;
 
@@ -240,6 +242,7 @@ li {
   align-items: center;
   justify-content: center;
   border-radius: 10px;
+  box-shadow: $box-shadow;
   overflow: hidden;
   position: relative;
   right: 100%;
@@ -308,6 +311,7 @@ li {
   margin-bottom: 10px;
   background: $second-background;
   border-radius: 10px;
+  box-shadow: $box-shadow;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -342,6 +346,7 @@ li {
   padding: 30px 30px 50px;
   background-color: white;
   border-radius: 10px;
+  box-shadow: $box-shadow;
   position: relative;
   z-index: 3;
 }
@@ -565,6 +570,7 @@ li {
   padding: 30px 30px 50px;
   background-color: white;
   border-radius: 10px;
+  box-shadow: $box-shadow;
 }
 
 .catalog__outputArea-recommended-title {
@@ -693,6 +699,7 @@ li {
   padding: 30px 30px 60px 30px;
   border: none;
   border-radius: 10px;
+  box-shadow: $box-shadow;
   background-color: white;
   flex-grow: 1;
 }
@@ -761,6 +768,7 @@ li {
   border-top: 2px solid $second-color;
   border-bottom: 2px solid $second-color;
   border-radius: 20px;
+  box-shadow: $box-shadow;
   color: $second-color;
 }
 
@@ -776,6 +784,7 @@ li {
   background-color: $second-color;
   border: none;
   border-radius: 20px;
+  box-shadow: $box-shadow;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -851,6 +860,7 @@ li {
   border-bottom: 2px solid $second-color;
   border-radius: 20px;
   background-color: $first-color;
+  box-shadow: $box-shadow;
   display: flex;
   align-items: center;
   justify-content: center;
