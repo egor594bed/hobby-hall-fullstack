@@ -1,4 +1,3 @@
-Хост - https://hobby-hall.onrender.com/
 
 Технологии в проекте:
 
